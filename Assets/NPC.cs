@@ -61,13 +61,15 @@ public class NPC : MonoBehaviour
         }
     }
 
-    IEnumerator ChangeToZombie() {
+    protected virtual IEnumerator ChangeToZombie() {
         if (canChange)
         {
             yield return new WaitForSeconds(.5f);
             canChange = false;
             health = zombieHealth;
             humanState = HumanState.ZOMBIE;
+            gameObject.AddComponent<Zombie>();
+            Destroy(this);
         }
     }
 

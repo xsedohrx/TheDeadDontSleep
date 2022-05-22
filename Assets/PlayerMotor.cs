@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Motor : MonoBehaviour
+public class PlayerMotor : MonoBehaviour
 {
     private void OnEnable()
     {
