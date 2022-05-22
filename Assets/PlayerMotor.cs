@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
+    [SerializeField] float movementSpeed = 3;
     private void OnEnable()
     {
         PlayerInput.OnKeyPressed += MoveTo;
@@ -17,6 +18,6 @@ public class PlayerMotor : MonoBehaviour
 
     private void MoveTo(Vector2 direction)
     {
-        transform.Translate(direction * Time.deltaTime);
+        transform.Translate(direction * movementSpeed * Time.deltaTime);
     }
 }
