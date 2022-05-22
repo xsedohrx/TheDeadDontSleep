@@ -33,5 +33,18 @@ public class Zombie : NPC
         transform.Translate(direction * Time.deltaTime);
     }
 
+    private void OnEnable()
+    {
+        Projectile.OnTargetHit += TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        Projectile.OnTargetHit -= TakeDamage;
+    }
+
+    void TakeDamage(float damageToTake) {
+        health -= damageToTake;
+    }
 
 }

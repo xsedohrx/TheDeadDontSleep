@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private float health = 10;
+    [SerializeField] protected float health = 10;
     [SerializeField] private float zombieHealth = 10;
     protected float radius;
     protected bool canChange = true;

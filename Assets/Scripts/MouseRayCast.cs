@@ -10,6 +10,7 @@ public class MouseRayCast : MonoBehaviour
     void Update()
     {
         DirectionToTarget();
+
     }
 
     private void DirectionToTarget()
