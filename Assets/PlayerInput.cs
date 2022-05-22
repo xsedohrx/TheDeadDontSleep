@@ -6,30 +6,39 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public static event Action<Vector2> OnKeyPressed;
-
+    public static event Action<Vector2> OnMouseButtonPressed;
+    public static Vector3 mousePos;
     // Update is called once per frame
     void Update()
     {
-        GetUserInput();
+        GetMovementInput();
+        GetMouseInput();
     }
 
-    private void GetUserInput()
+    private void GetMouseInput()
     {
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetMouseButtonDown(0))
         {
-            OnKeyPressed?.Invoke(Vector2.up);
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            OnMouseButtonPressed?.Invoke(mousePos);
         }
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+    }
+
+    private void GetMovementInput()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) ||
+            (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) ||
+            
+            (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)))
         {
-            OnKeyPressed?.Invoke(Vector2.left);
+            OnKeyPressed?.Invoke(new Vector2(horizontalInput, verticalInput));
         }
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)))
         {
-            OnKeyPressed?.Invoke(Vector2.down);
-        }
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            OnKeyPressed?.Invoke(Vector2.right);
+            OnKeyPressed?.Invoke(new Vector2(horizontalInput * 0.5f, verticalInput * 0.5f));
         }
     }
 }

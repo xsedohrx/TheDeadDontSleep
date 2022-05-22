@@ -7,13 +7,18 @@ public class Zombie : NPC
 {
     [SerializeField] Transform target;
     private float moveSpeed = 10f;
-    
+
+    private void Awake()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;     
+    }
+
     private void Start()
     {
         humanState = HumanState.ZOMBIE;
         canChange = false;
         radius = 1.5f;
-
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     protected override void Update()
