@@ -36,7 +36,8 @@ public class Zombie : NPC
         humanState = HumanState.ZOMBIE;
         canChange = false;
         radius = 1.5f;
-        gameObject.GetComponent<Renderer>().material.color = Color.red;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+        //gameObject.GetComponent<Renderer>().material.color = Color.red;
     }
 
     protected override void Update()
@@ -53,10 +54,13 @@ public class Zombie : NPC
     }
 
     private void MoveToTarget(Transform target)
-    {
-        Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y, target.position.z - transform.position.z);
-        transform.Translate(direction * Time.deltaTime);
-        if (Vector3.Distance(target.position, transform.position) <= radius)
+    {        
+        if (Vector3.Distance(target.position, transform.position) > radius)
+        {
+            Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y, target.position.z - transform.position.z);
+            transform.Translate(new Vector3(direction.x, transform.position.y, direction.z) * Time.deltaTime);
+        }
+        else
         {
             StartCoroutine(AttackCooldown());
         }
