@@ -10,7 +10,13 @@ public class Zombie : NPC
 
     private void Awake()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;     
+        //TODO Change this to find any player when needed (probably be an action?)
+        FindPlayerTarget();
+    }
+
+    private void FindPlayerTarget()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()
