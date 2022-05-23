@@ -9,21 +9,24 @@ public class NPC : MonoBehaviour
     [SerializeField] private float zombieHealth = 10;
     protected float radius;
     protected bool canChange = true;
+    private bool inTraining = false;
     public float Health { get { return health; } private set { } }
+ 
+    #region Human State Variables
 
     public enum HumanState
     {
         ALIVE,
-        TURNING,
+        TRAINING,
+        INFECTED,
         ZOMBIE,
+        SOLDIER,
         DEAD
     }
     protected HumanState humanState;
 
-    //public static event Action<GameObject> OnDeath;
-
-    protected virtual void Update() => GetHumanState(); 
-
+    #endregion
+    #region Human State Switch
     //Human state check
     void GetHumanState() {
         switch (humanState)
@@ -31,33 +34,42 @@ public class NPC : MonoBehaviour
             case HumanState.ALIVE:
                 CheckHealth();
                 break;
-            case HumanState.TURNING:
+            case HumanState.TRAINING:
+                StartCoroutine(StartSoldierTraining());
+                break;
+            case HumanState.INFECTED:
                 StartCoroutine(ChangeToZombie());
                 break;
             case HumanState.ZOMBIE:
-                DeathCheck();
+                CheckHealth();
+                break;
+            case HumanState.SOLDIER:
+                CheckHealth();
                 break;
             case HumanState.DEAD:
                 Death();
                 break;
         }
     }
+    #endregion
 
-    private void DeathCheck()
-    {
-        if (Health <= 0)
-        {
-            health = 0;
-            Death();
-        }
-    }
+    protected virtual void Update() => GetHumanState();
 
+    //Check to see if npc should change or die!
     private void CheckHealth()
     {
         if (Health <= 0)
         {
+            if (canChange)
+            {
+                humanState = HumanState.INFECTED;
+
+            }
+            else
+            {
+                Death();
+            }
             health = 0;
-            humanState = HumanState.TURNING;
         }
     }
 
@@ -73,8 +85,24 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void Death() {
-        //OnDeath?.Invoke(this.gameObject);
+    protected virtual IEnumerator StartSoldierTraining()
+    {
+        if (!inTraining)
+        {
+            inTraining = true;
+            yield return new WaitForSeconds(.5f);
+            inTraining = false;
+            humanState = HumanState.SOLDIER;
+            gameObject.AddComponent<Soldier>();
+            Destroy(this);
+        }
+    }
+
+    private void Death() {
         GameObject.Destroy(gameObject);
+    }
+
+    private void StartTraining() {
+        humanState = HumanState.TRAINING;
     }
 }
