@@ -8,15 +8,21 @@ public class Zombie : NPC
     [SerializeField] Transform target;
     private float moveSpeed = 10f;
 
+    #region Unity Functions
+    private void OnEnable()
+    {
+        Projectile.OnTargetHit += TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        Projectile.OnTargetHit -= TakeDamage;
+    }
+
     private void Awake()
     {
         //TODO Change this to find any player when needed (probably be an action?)
         FindPlayerTarget();
-    }
-
-    private void FindPlayerTarget()
-    {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Start()
@@ -33,24 +39,26 @@ public class Zombie : NPC
         MoveToTarget(target);        
     }
 
+    #endregion
+    #region Target Functions
+    private void FindPlayerTarget()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
     private void MoveToTarget(Transform target)
     {
-        Vector2 direction = new Vector2(target.position.x - transform.position.x, target.position.y - transform.position.y);
+        Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y);
         transform.Translate(direction * Time.deltaTime);
     }
 
-    private void OnEnable()
-    {
-        Projectile.OnTargetHit += TakeDamage;
-    }
-
-    private void OnDisable()
-    {
-        Projectile.OnTargetHit -= TakeDamage;
-    }
+    #endregion
 
     void TakeDamage(float damageToTake) {
         health -= damageToTake;
+
     }
+
+
 
 }
