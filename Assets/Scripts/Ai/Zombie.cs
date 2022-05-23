@@ -30,7 +30,7 @@ public class Zombie : NPC
         humanState = HumanState.ZOMBIE;
         canChange = false;
         radius = 1.5f;
-        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        //gameObject.GetComponent<SpriteRenderer>().color = Color.red;
     }
 
     protected override void Update()
@@ -48,7 +48,7 @@ public class Zombie : NPC
 
     private void MoveToTarget(Transform target)
     {
-        Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y);
+        Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y, target.position.z - transform.position.z);
         transform.Translate(direction * Time.deltaTime);
     }
 
