@@ -31,14 +31,11 @@ public class PlayerInput : MonoBehaviour
 
         if ((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) ||
             (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) ||
-            
-            (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)))
+            (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) ||
+            (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            )
         {
-            OnKeyPressed?.Invoke(new Vector2(horizontalInput, verticalInput));
-        }
-        if ((Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)))
-        {
-            OnKeyPressed?.Invoke(new Vector2(horizontalInput * 0.5f, verticalInput * 0.5f));
+            OnKeyPressed?.Invoke(new Vector2(horizontalInput, verticalInput).normalized);
         }
     }
 }
