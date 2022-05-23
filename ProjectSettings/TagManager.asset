@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Unit
   - Projectile
+  - Human
   layers:
   - Default
   - TransparentFX

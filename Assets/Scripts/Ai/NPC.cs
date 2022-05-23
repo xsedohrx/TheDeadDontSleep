@@ -53,6 +53,16 @@ public class NPC : MonoBehaviour
     }
     #endregion
 
+    private void OnEnable()
+    {
+        Zombie.DamageTarget = TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        Zombie.DamageTarget -= TakeDamage;
+    }
+
     protected virtual void Update() => GetHumanState();
 
     //Check to see if npc should change or die!
@@ -104,5 +114,11 @@ public class NPC : MonoBehaviour
 
     private void StartTraining() {
         humanState = HumanState.TRAINING;
+    }
+
+    protected virtual void TakeDamage(float damageToTake) {
+        health -= damageToTake;
+        Debug.Log(damageToTake + "New Health:" + Health + ":" + health);
+        Debug.Log("Taking Damage");
     }
 }
