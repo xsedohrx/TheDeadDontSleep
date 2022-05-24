@@ -10,10 +10,21 @@ public class NPC : MonoBehaviour
     protected NavMeshAgent agent;
     [SerializeField] protected float health = 10;
     [SerializeField] private float zombieHealth = 10;
+    GameObject killer;
     bool isControlled = false;
-    
+
     protected bool canChange = true;
     private bool inTraining = false;
+
+    private bool isTarget = false;  
+
+    public bool IsTarget
+    {
+        get { return isTarget; }
+        set { isTarget = value; }
+    }
+
+
     public float Health { get { return health; } private set { } }
  
     #region Human State Variables
@@ -120,5 +131,13 @@ public class NPC : MonoBehaviour
     public void TakeDamage(float damageToTake) {
         health -= damageToTake;
 
+    }
+
+    void SetKiller(GameObject killer) {
+        if (Health<=0) {
+            this.killer = killer;
+            killer.GetComponent<Zombie>().isControlled = true;
+                Debug.Log(killer.GetComponent<Zombie>().isControlled + "Zombie! ");
+        }
     }
 }
