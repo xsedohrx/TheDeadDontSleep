@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 6634202580461704662}
   - component: {fileID: 6634202580461704663}
   - component: {fileID: 6634202580461704664}
+  - component: {fileID: 8891662863454938341}
   m_Layer: 0
   m_Name: PlayerContainer
   m_TagString: Player
@@ -122,6 +123,7 @@ Transform:
   - {fileID: 8036237829900433647}
   - {fileID: 8036237829446305564}
   - {fileID: 790499274}
+  - {fileID: 1068530804465390284}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -210,6 +212,20 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8891662863454938341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381503306902024290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2d4eb6bd9a15c49b6b1f78bbd4c6f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 7758437970346711853, guid: 6a471d1c3c0a2164ebc71fa84b991c4f, type: 3}
+  projectileSpawnPoint: {fileID: 1068530804465390284}
 --- !u!1 &8036237827983004015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1461,3 +1477,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5afb5a476c73f3244810f71a95f9be12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9179018203408177894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068530804465390284}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1068530804465390284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9179018203408177894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.294, z: 1.123}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6000739294774477722}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -85,6 +85,7 @@ public class NPC : MonoBehaviour
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
+                Destroy(gameObject.GetComponent<PlayerMotor>());
 
             }
             else
@@ -121,6 +122,7 @@ public class NPC : MonoBehaviour
     }
 
     private void Death() {
+        
         GameObject.Destroy(gameObject);
     }
 
