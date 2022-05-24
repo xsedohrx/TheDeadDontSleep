@@ -34,7 +34,7 @@ public class Rotator : MonoBehaviour
 
             // We need some distance margin with our movement
             // or else the character could twitch back and forth with slight movement
-            if (Vector3.Distance(targetPos, transform.position) >= 0.5f)
+            if (Vector3.Distance(targetPos, transform.position) >= 0.1f)
             {
                 Quaternion lookOnLook = Quaternion.LookRotation(targetPos - transform.position);
 
