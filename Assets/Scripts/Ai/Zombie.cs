@@ -26,8 +26,6 @@ public class Zombie : NPC
     }
     public State state;
 
-    public static Action<float> DamageTarget;
-
     #region Unity Functions
 
 
@@ -99,7 +97,8 @@ public class Zombie : NPC
             if (canAttack && GetTargetDistance(currentTarget) < agent.stoppingDistance)
             {
                 canAttack = false;
-                DamageTarget?.Invoke(damage);
+                currentTarget.GetComponent<NPC>().TakeDamage(damage);
+                //
                 Debug.Log("Attacking");
                 yield return new WaitForSeconds(attackCooldown);
                 Debug.Log("Attacking complete");

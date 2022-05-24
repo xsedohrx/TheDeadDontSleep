@@ -57,15 +57,6 @@ public class NPC : MonoBehaviour
     }
     #endregion
 
-    private void OnEnable()
-    {
-        Zombie.DamageTarget += TakeDamage;
-    }
-
-    private void OnDisable()
-    {
-        Zombie.DamageTarget -= TakeDamage;
-    }
 
     protected virtual void Awake()
     {
@@ -126,7 +117,7 @@ public class NPC : MonoBehaviour
         humanState = HumanState.TRAINING;
     }
 
-    private void TakeDamage(float damageToTake) {
+    public void TakeDamage(float damageToTake) {
         health -= damageToTake;
 
     }
