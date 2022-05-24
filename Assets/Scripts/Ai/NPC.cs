@@ -2,14 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+
 
 public class NPC : MonoBehaviour
 {
+    protected NavMeshAgent agent;
     [SerializeField] protected float health = 10;
     [SerializeField] private float zombieHealth = 10;
-    protected float radius;
+    GameObject killer;
+    bool isControlled = false;
+
     protected bool canChange = true;
     private bool inTraining = false;
+
+    private bool isTarget = false;  
+
+    public bool IsTarget
+    {
+        get { return isTarget; }
+        set { isTarget = value; }
+    }
+
+
     public float Health { get { return health; } private set { } }
  
     #region Human State Variables
@@ -23,7 +38,7 @@ public class NPC : MonoBehaviour
         SOLDIER,
         DEAD
     }
-    protected HumanState humanState;
+    public HumanState humanState;
 
     #endregion
     #region Human State Switch
@@ -53,15 +68,12 @@ public class NPC : MonoBehaviour
     }
     #endregion
 
-    private void OnEnable()
+
+    protected virtual void Awake()
     {
-        Zombie.DamageTarget = TakeDamage;
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    private void OnDisable()
-    {
-        Zombie.DamageTarget -= TakeDamage;
-    }
 
     protected virtual void Update() => GetHumanState();
 
@@ -116,9 +128,16 @@ public class NPC : MonoBehaviour
         humanState = HumanState.TRAINING;
     }
 
-    protected virtual void TakeDamage(float damageToTake) {
+    public void TakeDamage(float damageToTake) {
         health -= damageToTake;
-        Debug.Log(damageToTake + "New Health:" + Health + ":" + health);
-        Debug.Log("Taking Damage");
+
+    }
+
+    void SetKiller(GameObject killer) {
+        if (Health<=0) {
+            this.killer = killer;
+            killer.GetComponent<Zombie>().isControlled = true;
+                Debug.Log(killer.GetComponent<Zombie>().isControlled + "Zombie! ");
+        }
     }
 }
