@@ -22,6 +22,6 @@ public class CameraFollow : MonoBehaviour
 
     private void FollowTarget(Vector3 targetToFollow)
     {
-        mainCam.transform.position = new Vector3(targetToFollow.x, mainCam.transform.position.y, targetToFollow.z-10);
+        mainCam.transform.position = new Vector3(targetToFollow.x, mainCam.transform.position.y, targetToFollow.z);
     }
 }
