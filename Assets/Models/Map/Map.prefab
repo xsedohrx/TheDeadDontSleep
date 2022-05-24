@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2784543653007773786}
   - component: {fileID: 2784543653007773787}
   - component: {fileID: 2784543653007773764}
-  m_Layer: 0
+  - component: {fileID: 2923925985804905332}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,6 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2923925985804905332
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543653007773766}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.99999994, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: -0.0000009536743}
 --- !u!1 &2784543653009479756
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784543653009479747}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,7 +155,7 @@ GameObject:
   - component: {fileID: 2784543653037781200}
   - component: {fileID: 2784543653037781201}
   - component: {fileID: 2784543653037781202}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +253,7 @@ GameObject:
   - component: {fileID: 2784543653088099204}
   - component: {fileID: 2784543653088099205}
   - component: {fileID: 2784543653088099206}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +351,8 @@ GameObject:
   - component: {fileID: 2784543653106879034}
   - component: {fileID: 2784543653106879035}
   - component: {fileID: 2784543653106879012}
-  m_Layer: 0
+  - component: {fileID: 8158172451895614942}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,6 +437,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &8158172451895614942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543653106879014}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Center: {x: 0.000000007450581, y: 0, z: -0.0000009536743}
 --- !u!1 &2784543653130510582
 GameObject:
   m_ObjectHideFlags: 0
@@ -434,7 +462,8 @@ GameObject:
   - component: {fileID: 2784543653130510538}
   - component: {fileID: 2784543653130510539}
   - component: {fileID: 2784543653130510580}
-  m_Layer: 0
+  - component: {fileID: 3280950331440147738}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -519,6 +548,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3280950331440147738
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543653130510582}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: -0.0000009536743}
 --- !u!1 &2784543653250654230
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,7 +573,7 @@ GameObject:
   - component: {fileID: 2784543653250654314}
   - component: {fileID: 2784543653250654315}
   - component: {fileID: 2784543653250654228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +670,7 @@ GameObject:
   - component: {fileID: 2784543653313891912}
   - component: {fileID: 2784543653313891913}
   - component: {fileID: 2784543653313891914}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -723,7 +765,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784543653336701066}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -761,7 +803,8 @@ GameObject:
   - component: {fileID: 2784543653368322493}
   - component: {fileID: 2784543653368322494}
   - component: {fileID: 2784543653368322495}
-  m_Layer: 0
+  - component: {fileID: 4666653353462508742}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,6 +889,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &4666653353462508742
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543653368322489}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.0000009536743}
 --- !u!1 &2784543653664072016
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +914,8 @@ GameObject:
   - component: {fileID: 2784543653664072020}
   - component: {fileID: 2784543653664072021}
   - component: {fileID: 2784543653664072022}
-  m_Layer: 0
+  - component: {fileID: 4715589905396616446}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,6 +1000,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &4715589905396616446
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543653664072016}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2784543653669634682
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,7 +1022,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784543653669634681}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -991,7 +1061,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784543653921055199}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BarrellTrio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1028,7 +1098,8 @@ GameObject:
   - component: {fileID: 2784543654003780946}
   - component: {fileID: 2784543654003780947}
   - component: {fileID: 2784543654003780956}
-  m_Layer: 0
+  - component: {fileID: 3303967627227301381}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1113,6 +1184,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &3303967627227301381
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543654003780958}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000023841858}
 --- !u!1 &2784543654037413048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,7 +1209,7 @@ GameObject:
   - component: {fileID: 2784543654037413052}
   - component: {fileID: 2784543654037413053}
   - component: {fileID: 2784543654037413054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1222,7 +1306,7 @@ GameObject:
   - component: {fileID: 2784543654068395475}
   - component: {fileID: 2784543654068395484}
   - component: {fileID: 2784543654068395485}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1357,7 +1441,7 @@ GameObject:
   - component: {fileID: 2784543654319536997}
   - component: {fileID: 2784543654319536998}
   - component: {fileID: 2784543654319536999}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1455,7 +1539,7 @@ GameObject:
   - component: {fileID: 2784543654413296992}
   - component: {fileID: 2784543654413296993}
   - component: {fileID: 2784543654413296994}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1552,7 +1636,7 @@ GameObject:
   - component: {fileID: 2784543654622982204}
   - component: {fileID: 2784543654622982205}
   - component: {fileID: 2784543654622982206}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Building (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1646,7 +1730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2784543654736255745}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BarrellTrio (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1781,7 +1865,8 @@ GameObject:
   - component: {fileID: 2784543654830882952}
   - component: {fileID: 2784543654830882953}
   - component: {fileID: 2784543654830882954}
-  m_Layer: 0
+  - component: {fileID: 8797508308931433580}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1866,6 +1951,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &8797508308931433580
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543654830882996}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2784543654912557107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1976,7 @@ GameObject:
   - component: {fileID: 2784543654912557111}
   - component: {fileID: 2784543654912557104}
   - component: {fileID: 2784543654912557105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1976,7 +2074,8 @@ GameObject:
   - component: {fileID: 2784543654960333303}
   - component: {fileID: 2784543654960333296}
   - component: {fileID: 2784543654960333297}
-  m_Layer: 0
+  - component: {fileID: 5285130572397701332}
+  m_Layer: 8
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2061,6 +2160,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &5285130572397701332
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784543654960333299}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 1, z: 1.0000002}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2784543654994789441
 GameObject:
   m_ObjectHideFlags: 0
@@ -2073,7 +2185,7 @@ GameObject:
   - component: {fileID: 2784543654994789445}
   - component: {fileID: 2784543654994789446}
   - component: {fileID: 2784543654994789447}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Barrel (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
