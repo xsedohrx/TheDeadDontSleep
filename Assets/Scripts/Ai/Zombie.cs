@@ -35,7 +35,7 @@ public class Zombie : NPC
         positionToLookFrom = new List<GameObject>();
         gameObject.tag = "Zombie";
         agent.stoppingDistance = 3.5f;
-
+        
     }
 
     private void Start()
@@ -44,6 +44,7 @@ public class Zombie : NPC
         {
             positionToLookFrom.Add(ray.gameObject);
         }
+        
 
         humanState = HumanState.ZOMBIE;
         canChange = false;
@@ -142,6 +143,7 @@ public class Zombie : NPC
         }
         else
         {
+            currentTarget.GetComponent<NPC>().IsTarget = true;
             agent.speed = chaseSpeed;
             agent.SetDestination(currentTarget.position);
         }        
