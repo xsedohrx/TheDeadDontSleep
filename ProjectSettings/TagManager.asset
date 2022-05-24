@@ -11,12 +11,12 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BehindMask
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Mask
+  - Blackout
+  - MapObjects
   - 
   - 
   - 
