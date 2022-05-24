@@ -5,6 +5,18 @@ using UnityEngine;
 
 public class PlayerMotor : MonoBehaviour
 {
+    private FieldOfView fov;
+    private Vector3 fovOffset = new Vector3(0, 1, 0);
+
+    private void Start()
+    {
+        fov = FindObjectOfType<FieldOfView>();
+        if (fov)
+        {
+            fov.SetOrigin(transform.position + fovOffset);
+        }
+    }
+
     [SerializeField] float movementSpeed = 3;
     private void OnEnable()
     {
@@ -48,6 +60,9 @@ public class PlayerMotor : MonoBehaviour
 
         transform.position += new Vector3( direction.x, 0, direction.y )  * movementSpeed * speedDirectionMultiplier * Time.deltaTime;
 
-        Debug.LogWarning(angleMoving + " / " + angleLooking + " / " + angleDifference + " / " + speedDirectionMultiplier );
+        if (fov)
+        {
+            fov.SetOrigin(transform.position + new Vector3(0,1,0));
+        }
     }
 }
