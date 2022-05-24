@@ -7,17 +7,18 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Zombie : NPC
 {
-    [SerializeField] Transform currentTarget;
+    List<GameObject> positionToLookFrom;
+    [SerializeField] Transform currentTarget = null;
     Vector3 newPosition;
-    protected NavMeshAgent agent;
 
-    private float moveSpeed = 10f;
+    private float wanderSpeed = 3.5f;
+    private float chaseSpeed = 6f;
     private float attackCooldown = 1.0f;
-    [SerializeField] float targetRange = 1.0f;
+    private float wanderRange = 8.0f;
+    
     [SerializeField] bool canAttack = true;
     [SerializeField] float damage;
-    protected float attackRadius;
-    protected float chaseRadius;
+
     public enum State { 
         WANDER,
         PERSUE,
@@ -28,22 +29,28 @@ public class Zombie : NPC
     public static Action<float> DamageTarget;
 
     #region Unity Functions
-    private void OnEnable(){ Projectile.OnTargetHit += TakeDamage;}
-    private void OnDisable(){ Projectile.OnTargetHit -= TakeDamage;}
 
 
-    private void Awake()
+    protected override void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        base.Awake();
+        positionToLookFrom = new List<GameObject>();
+        gameObject.tag = "Zombie";
+        agent.stoppingDistance = 3.5f;
+
     }
 
     private void Start()
     {
+        foreach (RayScript ray in gameObject.GetComponentsInChildren<RayScript>())
+        {
+            positionToLookFrom.Add(ray.gameObject);
+        }
+
         humanState = HumanState.ZOMBIE;
         canChange = false;
-        attackRadius = 1.5f;
-        currentTarget = GameObject.FindGameObjectWithTag("Player").transform;
-        SetTarget(currentTarget);
+        
+
 
     }
 
@@ -62,11 +69,11 @@ public class Zombie : NPC
                 break;
 
             case State.PERSUE:
-
+                Persue();
                 break;
 
             case State.ATTACK:
-                //StartCoroutine(AttackCooldown());
+                StartCoroutine(AttackCooldown());
                 break;
         }
     }
@@ -82,64 +89,71 @@ public class Zombie : NPC
         return Vector3.Distance(target.position, transform.position);
     }
 
-    private void MoveToTarget(Transform target)
-    {        
-        if (GetTargetDistance(target) > attackRadius)
-        {
-            Vector3 direction = new Vector3(target.position.x - transform.position.x, target.position.y - transform.position.y, target.position.z - transform.position.z);
-            transform.Translate(new Vector3(direction.x, transform.position.y, direction.z) * Time.deltaTime);
-
-        }
-        else
-        {
-            state = State.ATTACK;
-        }
-    }
 
     #endregion
 
-    protected override void TakeDamage(float damageToTake)
-    {
-        base.TakeDamage(damageToTake);
-    }
 
     IEnumerator AttackCooldown() {
-        if (canAttack && GetTargetDistance(currentTarget) < attackRadius)
+        if (scanForTarget())
         {
-            canAttack = false;
-            DamageTarget?.Invoke(damage);
-            Debug.Log("Attacking");
-            yield return new WaitForSeconds(attackCooldown);
-            Debug.Log("Attacking complete");
-            canAttack = true;
+            if (canAttack && GetTargetDistance(currentTarget) < agent.stoppingDistance)
+            {
+                canAttack = false;
+                DamageTarget?.Invoke(damage);
+                Debug.Log("Attacking");
+                yield return new WaitForSeconds(attackCooldown);
+                Debug.Log("Attacking complete");
+                canAttack = true;
 
+            }
         }
+        else
+        {
+            state = State.WANDER;
+        }
+        
     }
 
-    void Wander() {
+    void Wander()
+    {
         if (scanForTarget())
         {
             state = State.PERSUE;
         }
-        newPosition = new Vector3(
-            UnityEngine.Random.Range(transform.position.x - 3, transform.position.x + 3),
-            transform.position.y,
-            UnityEngine.Random.Range(transform.position.x - 3, transform.position.x + 3)
-            );
-        agent.SetDestination(newPosition);
+        agent.speed = wanderSpeed;
+        MoveToDestination();
 
     }
 
+    private void MoveToDestination()
+    {
+        newPosition = new Vector3(
+            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange),
+            transform.position.y,
+            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
+            );
+        agent.SetDestination(newPosition);
+    }
 
-    void Persue() { }
+
+    void Persue() {
+        if (GetTargetDistance(currentTarget) < agent.stoppingDistance)
+        {
+            state = State.ATTACK;
+        }
+        else
+        {
+            agent.speed = chaseSpeed;
+            agent.SetDestination(currentTarget.position);
+        }        
+    }
 
 
 
     //zombie vision
-    public GameObject[] positionToLookFrom;
     bool scanForTarget()
     {
-        for (int i = 0; i < positionToLookFrom.Length; i++)
+        for (int i = 0; i < positionToLookFrom.Count; i++)
         {
             Ray[] raysForSearch = new Ray[3];
 
@@ -162,10 +176,14 @@ public class Zombie : NPC
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 20))
                 {
-                    if (hit.transform.tag == "Player")
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
                     {
-
+                        currentTarget = hit.transform;
                         return true;
+                    }
+                    else
+                    {
+                        currentTarget = null;
                     }
                 }
             }

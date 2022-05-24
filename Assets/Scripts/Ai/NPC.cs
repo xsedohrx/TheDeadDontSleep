@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 
 public class NPC : MonoBehaviour
 {
+    protected NavMeshAgent agent;
     [SerializeField] protected float health = 10;
     [SerializeField] private float zombieHealth = 10;
-
+    bool isControlled = false;
     
     protected bool canChange = true;
     private bool inTraining = false;
@@ -58,12 +59,17 @@ public class NPC : MonoBehaviour
 
     private void OnEnable()
     {
-        Zombie.DamageTarget = TakeDamage;
+        Zombie.DamageTarget += TakeDamage;
     }
 
     private void OnDisable()
     {
         Zombie.DamageTarget -= TakeDamage;
+    }
+
+    protected virtual void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
     }
 
 
@@ -120,7 +126,7 @@ public class NPC : MonoBehaviour
         humanState = HumanState.TRAINING;
     }
 
-    protected virtual void TakeDamage(float damageToTake) {
+    private void TakeDamage(float damageToTake) {
         health -= damageToTake;
 
     }
