@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class NPC : MonoBehaviour
 {
     [SerializeField] protected float health = 10;
     [SerializeField] private float zombieHealth = 10;
-    protected float radius;
+
+    
     protected bool canChange = true;
     private bool inTraining = false;
     public float Health { get { return health; } private set { } }
@@ -23,7 +26,7 @@ public class NPC : MonoBehaviour
         SOLDIER,
         DEAD
     }
-    protected HumanState humanState;
+    public HumanState humanState;
 
     #endregion
     #region Human State Switch
@@ -62,6 +65,7 @@ public class NPC : MonoBehaviour
     {
         Zombie.DamageTarget -= TakeDamage;
     }
+
 
     protected virtual void Update() => GetHumanState();
 
@@ -118,7 +122,6 @@ public class NPC : MonoBehaviour
 
     protected virtual void TakeDamage(float damageToTake) {
         health -= damageToTake;
-        Debug.Log(damageToTake + "New Health:" + Health + ":" + health);
-        Debug.Log("Taking Damage");
+
     }
 }
