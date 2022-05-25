@@ -9,6 +9,8 @@ public class NPC : MonoBehaviour
 {
     protected NavMeshAgent agent;
     protected Vector3 newPosition;
+    private Animator anim;
+
     [SerializeField] protected Transform currentTarget = null;
     [SerializeField] protected float health = 10;
     [SerializeField] protected float damage;
@@ -32,6 +34,14 @@ public class NPC : MonoBehaviour
 
     public float Health { get { return health; } private set { } }
  
+    protected void UpdateAnimator()
+    {
+        if (!anim || transform.tag == "Player") return;
+
+        anim.SetFloat("velocityZ", agent.velocity.z / agent.speed);
+        anim.SetFloat("velocityX", agent.velocity.x / agent.speed);
+    }
+
     #region Human State Variables
 
     public enum HumanState
@@ -49,6 +59,7 @@ public class NPC : MonoBehaviour
     #region Human State Switch
     //Human state check
     void GetHumanState() {
+        UpdateAnimator();
         switch (humanState)
         {
             case HumanState.ALIVE:
@@ -80,6 +91,7 @@ public class NPC : MonoBehaviour
     {
         positionToLookFrom = new List<GameObject>();
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
     }
 
     protected virtual void Start()
