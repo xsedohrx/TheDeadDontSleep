@@ -7,6 +7,8 @@ public class PlayerMotor : MonoBehaviour
 {
     private FieldOfView fov;
     private Vector3 fovOffset = new Vector3(0, 1, 0);
+    private Animator anim;
+
 
     private void Start()
     {
@@ -15,12 +17,14 @@ public class PlayerMotor : MonoBehaviour
         {
             fov.SetOrigin(transform.position + fovOffset);
         }
+        anim = GetComponentInChildren<Animator>();
     }
 
     [SerializeField] float movementSpeed = 3;
     private void OnEnable()
     {
         PlayerInput.OnKeyPressed += MoveTo;
+        PlayerInput.OnNoMovement += Stop;
     }
 
     private void OnDisable()
@@ -40,6 +44,15 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
+    private void Stop()
+    {
+        if (anim)
+        {
+            anim.SetFloat("velocityZ", 0);
+            anim.SetFloat("velocityX", 0);
+        }
+    }
+
     private void MoveTo(Vector2 direction)
     {
         var angleMoving = Angle(direction);
@@ -53,6 +66,15 @@ public class PlayerMotor : MonoBehaviour
         {
             angleDifference -= 360;
         }
+
+        if (anim)
+        {
+            var runVector = new Vector2(Mathf.Cos(angleDifference * Mathf.Deg2Rad), Mathf.Sin(angleDifference * Mathf.Deg2Rad));
+            anim.SetFloat("velocityZ", runVector.x);
+            anim.SetFloat("velocityX", runVector.y);
+        }
+
+
         angleDifference = Math.Abs(angleDifference);
         //angleDifference now in the range 0 to 180
         //ok we slow the player down up to 50% if full backwards and 100% if forwards.. 
