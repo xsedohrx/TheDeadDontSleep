@@ -9,6 +9,7 @@ TagManager:
   - Human
   - Ray
   - Zombie
+  - Soldier
   layers:
   - Default
   - TransparentFX

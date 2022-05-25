@@ -1474,7 +1474,7 @@ GameObject:
   - component: {fileID: 8443112746711735415}
   m_Layer: 0
   m_Name: Zombie
-  m_TagString: Untagged
+  m_TagString: Zombie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1558,12 +1558,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73846d0dc964364f9b0f95e065b0fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentTarget: {fileID: 6000739294774477722, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
   health: 10
+  damage: 2
   zombieHealth: 10
   humanState: 0
-  currentTarget: {fileID: 0}
+  updateSpeed: 0.5
   canAttack: 1
-  damage: 2
   state: 0
 --- !u!195 &8443112746711735415
 NavMeshAgent:

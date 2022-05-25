@@ -8,8 +8,13 @@ using UnityEngine.AI;
 public class NPC : MonoBehaviour
 {
     protected NavMeshAgent agent;
+    protected Vector3 newPosition;
+    [SerializeField] protected Transform currentTarget = null;
     [SerializeField] protected float health = 10;
+    [SerializeField] protected float damage;
+    protected float wanderRange = 5.0f;
     [SerializeField] private float zombieHealth = 10;
+    protected List<GameObject> positionToLookFrom;
     GameObject killer;
     bool isControlled = false;
 
@@ -59,7 +64,9 @@ public class NPC : MonoBehaviour
                 CheckHealth();
                 break;
             case HumanState.SOLDIER:
-                CheckHealth();
+                //TODO Make soldier
+                //TrainingComplete();
+                //CheckHealth();
                 break;
             case HumanState.DEAD:
                 Death();
@@ -71,9 +78,18 @@ public class NPC : MonoBehaviour
 
     protected virtual void Awake()
     {
+        positionToLookFrom = new List<GameObject>();
         agent = GetComponent<NavMeshAgent>();
     }
 
+    protected virtual void Start()
+    {
+        foreach (RayScript ray in gameObject.GetComponentsInChildren<RayScript>())
+        {
+            positionToLookFrom.Add(ray.gameObject);
+        }
+
+    }
 
     protected virtual void Update() => GetHumanState();
 
@@ -96,7 +112,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator ChangeToZombie() {
+    private IEnumerator ChangeToZombie() {
         if (canChange)
         {
             yield return new WaitForSeconds(.5f);
@@ -108,7 +124,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    protected virtual IEnumerator StartSoldierTraining()
+    private IEnumerator StartSoldierTraining()
     {
         if (!inTraining)
         {
@@ -121,7 +137,7 @@ public class NPC : MonoBehaviour
         }
     }
 
-    private void Death() {
+    protected virtual void Death() {
         
         GameObject.Destroy(gameObject);
     }
@@ -142,4 +158,61 @@ public class NPC : MonoBehaviour
                 Debug.Log(killer.GetComponent<Zombie>().isControlled + "Zombie! ");
         }
     }
+
+    protected virtual void MoveToDestination()
+    {
+        newPosition = new Vector3(
+            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange),
+            transform.position.y,
+            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
+            );
+        agent.SetDestination(newPosition);
+    }
+
+    protected virtual bool ScanForTarget()
+    {
+        for (int i = 0; i < positionToLookFrom.Count; i++)
+        {
+            Ray[] raysForSearch = new Ray[3];
+
+            Vector3 noAngle = positionToLookFrom[i].transform.forward;
+            Quaternion spreadAngle = Quaternion.AngleAxis(-20, new Vector3(0, 1, 0));
+            Vector3 negativeDirection = spreadAngle * noAngle;
+            spreadAngle = Quaternion.AngleAxis(20, new Vector3(0, 1, 0));
+            Vector3 positiveDirection = spreadAngle * noAngle;
+
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + noAngle * 10.0f, Color.red);
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + positiveDirection * 10.0f, Color.red);
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + negativeDirection * 10.0f, Color.red);
+
+            raysForSearch[0] = new Ray(positionToLookFrom[i].transform.position, noAngle);
+            raysForSearch[1] = new Ray(positionToLookFrom[i].transform.position, negativeDirection);
+            raysForSearch[2] = new Ray(positionToLookFrom[i].transform.position, positiveDirection);
+
+            foreach (Ray ray in raysForSearch)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 20))
+                {
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
+                    {
+                        SetTarget(hit.transform);
+                        return true;
+                    }
+                    else
+                    {
+                        SetTarget(null);
+                    }
+                }
+            }
+        }
+        return false;
+
+    }
+
+    protected virtual void SetTarget(Transform target)
+    {
+        this.currentTarget = target;
+    }
+
 }
