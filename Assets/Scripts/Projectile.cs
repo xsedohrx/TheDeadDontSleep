@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
 
     [SerializeField] float projectileSpeed = 5.0f;
     public float force;
-    Rigidbody rigidbody;
+    private Rigidbody rigidbody;
     public static Action<float> OnTargetHit;
     public float projectileDamage = 2;
     private void Awake()

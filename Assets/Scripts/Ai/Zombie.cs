@@ -31,7 +31,7 @@ public class Zombie : NPC
     protected override void Awake()
     {
         base.Awake();
-
+        transform.parent = GameObject.Find("Zombies").transform;
         gameObject.tag = "Zombie";
         agent.stoppingDistance = 3.5f;
 
@@ -54,7 +54,6 @@ public class Zombie : NPC
         {
             StateSwitch();            
             yield return wait;
-            Debug.Log("Testing");
         }
     }
 
@@ -75,11 +74,6 @@ public class Zombie : NPC
                 break;
         }
     }
-
-    #endregion
-    #region Target Functions
-    protected override void SetTarget(Transform target){ base.SetTarget(target); }
-    private float GetTargetDistance(Transform target) { return Vector3.Distance(target.position, transform.position); }
 
     #endregion
     
@@ -145,12 +139,44 @@ public class Zombie : NPC
         }        
     }
 
-
-
-    //zombie vision
-    protected override bool ScanForTarget()
+    protected virtual bool ScanForTarget()
     {
-        return base.ScanForTarget();
-    }
+        for (int i = 0; i < positionToLookFrom.Count; i++)
+        {
+            Ray[] raysForSearch = new Ray[3];
 
+            Vector3 noAngle = positionToLookFrom[i].transform.forward;
+            Quaternion spreadAngle = Quaternion.AngleAxis(-20, new Vector3(0, 1, 0));
+            Vector3 negativeDirection = spreadAngle * noAngle;
+            spreadAngle = Quaternion.AngleAxis(20, new Vector3(0, 1, 0));
+            Vector3 positiveDirection = spreadAngle * noAngle;
+
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + noAngle * 10.0f, Color.red);
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + positiveDirection * 10.0f, Color.red);
+            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + negativeDirection * 10.0f, Color.red);
+
+            raysForSearch[0] = new Ray(positionToLookFrom[i].transform.position, noAngle);
+            raysForSearch[1] = new Ray(positionToLookFrom[i].transform.position, negativeDirection);
+            raysForSearch[2] = new Ray(positionToLookFrom[i].transform.position, positiveDirection);
+
+            foreach (Ray ray in raysForSearch)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 20))
+                {
+                    if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
+                    {
+                        SetTarget(hit.transform);
+                        return true;
+                    }
+                    else
+                    {
+                        SetTarget(null);
+                    }
+                }
+            }
+        }
+        return false;
+
+    }
 }

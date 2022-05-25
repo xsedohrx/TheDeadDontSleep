@@ -12,15 +12,8 @@ public class FireArm : MonoBehaviour
     [SerializeField] GameObject projectile;
     [SerializeField] Transform projectileSpawnPoint;    
 
-    private void OnEnable()
-    {
-        PlayerInput.OnMouseButtonPressed += Fire;
-
-    }
-    private void OnDisable()
-    {
-        PlayerInput.OnMouseButtonPressed -= Fire;
-    }
+    private void OnEnable(){ PlayerInput.OnMouseButtonPressed += Fire; }
+    private void OnDisable(){ PlayerInput.OnMouseButtonPressed -= Fire; }
 
 
     public virtual void Fire(Vector2 mousePos) {

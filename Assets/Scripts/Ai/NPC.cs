@@ -33,7 +33,8 @@ public class NPC : MonoBehaviour
 
 
     public float Health { get { return health; } private set { } }
- 
+    protected float GetTargetDistance(Transform target) { return Vector3.Distance(target.position, transform.position); }
+
     protected void UpdateAnimator()
     {
         if (!anim || transform.tag == "Player") return;
@@ -181,46 +182,7 @@ public class NPC : MonoBehaviour
         agent.SetDestination(newPosition);
     }
 
-    protected virtual bool ScanForTarget()
-    {
-        for (int i = 0; i < positionToLookFrom.Count; i++)
-        {
-            Ray[] raysForSearch = new Ray[3];
-
-            Vector3 noAngle = positionToLookFrom[i].transform.forward;
-            Quaternion spreadAngle = Quaternion.AngleAxis(-20, new Vector3(0, 1, 0));
-            Vector3 negativeDirection = spreadAngle * noAngle;
-            spreadAngle = Quaternion.AngleAxis(20, new Vector3(0, 1, 0));
-            Vector3 positiveDirection = spreadAngle * noAngle;
-
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + noAngle * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + positiveDirection * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + negativeDirection * 10.0f, Color.red);
-
-            raysForSearch[0] = new Ray(positionToLookFrom[i].transform.position, noAngle);
-            raysForSearch[1] = new Ray(positionToLookFrom[i].transform.position, negativeDirection);
-            raysForSearch[2] = new Ray(positionToLookFrom[i].transform.position, positiveDirection);
-
-            foreach (Ray ray in raysForSearch)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 20))
-                {
-                    if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
-                    {
-                        SetTarget(hit.transform);
-                        return true;
-                    }
-                    else
-                    {
-                        SetTarget(null);
-                    }
-                }
-            }
-        }
-        return false;
-
-    }
+    
 
     protected virtual void SetTarget(Transform target)
     {

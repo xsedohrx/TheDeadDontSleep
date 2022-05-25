@@ -16,8 +16,9 @@ public class Survivor : NPC
 
     #endregion
     #region Unity Functions
-    private void Start()
+    protected override void Start()
     {
+        base.Start(); 
         SetPanickState(PanickState.CALM);
     }
 
