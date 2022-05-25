@@ -14,7 +14,7 @@ public class Zombie : NPC
     private float wanderSpeed = 3.5f;
     private float chaseSpeed = 6f;
     private float attackCooldown = 1.0f;
-    private float wanderRange = 8.0f;
+    private float wanderRange = 5.0f, sightRadius = 8.0f;
     
     [SerializeField] bool canAttack = true;
     [SerializeField] float damage;
@@ -35,7 +35,7 @@ public class Zombie : NPC
         positionToLookFrom = new List<GameObject>();
         gameObject.tag = "Zombie";
         agent.stoppingDistance = 3.5f;
-        
+        damage = 2f;
     }
 
     private void Start()
@@ -44,19 +44,39 @@ public class Zombie : NPC
         {
             positionToLookFrom.Add(ray.gameObject);
         }
-        
+
 
         humanState = HumanState.ZOMBIE;
         canChange = false;
         
+        StartCoroutine(StartBehavior());
 
 
     }
 
+    
+    public float updateSpeed = .5f;
+    private bool isAttacking;
+
+    IEnumerator StartBehavior()
+    {
+
+        WaitForSeconds wait = new WaitForSeconds(updateSpeed);
+
+        while (enabled)
+        {
+            StateSwitch();            
+            yield return wait;
+            Debug.Log("Testing");
+        }
+    }
+
+
+
     protected override void Update()
     {
         base.Update();
-        StateSwitch();
+        //
     }
 
     private void StateSwitch()
@@ -94,17 +114,27 @@ public class Zombie : NPC
 
     IEnumerator AttackCooldown() {
         if (scanForTarget())
-        {
-            if (canAttack && GetTargetDistance(currentTarget) < agent.stoppingDistance)
+        {            
+            if (canAttack && GetTargetDistance(currentTarget) <= agent.stoppingDistance)
             {
+                isAttacking = true;
+                
                 canAttack = false;
                 currentTarget.GetComponent<NPC>().TakeDamage(damage);
-                //
-                Debug.Log("Attacking");
-                yield return new WaitForSeconds(attackCooldown);
-                Debug.Log("Attacking complete");
+                if (currentTarget == null)
+                {
+                    isAttacking = false;
+                    state = State.WANDER;
+                }
+                yield return new WaitForSeconds(attackCooldown);                
                 canAttack = true;
 
+            }
+            else
+            {
+                isAttacking = false;
+                canAttack = true;
+                
             }
         }
         else
@@ -179,12 +209,12 @@ public class Zombie : NPC
                 {
                     if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
                     {
-                        currentTarget = hit.transform;
+                        SetTarget(hit.transform);
                         return true;
                     }
                     else
                     {
-                        currentTarget = null;
+                        SetTarget(null);
                     }
                 }
             }
