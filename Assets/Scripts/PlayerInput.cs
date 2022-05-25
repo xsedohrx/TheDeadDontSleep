@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     public static event Action<Vector2> OnKeyPressed;
+    public static event Action OnNoMovement;
     public static event Action<Vector2> OnMouseButtonPressed;
     public static Vector3 mousePos;
     // Update is called once per frame
@@ -36,6 +37,9 @@ public class PlayerInput : MonoBehaviour
             )
         {
             OnKeyPressed?.Invoke(new Vector2(horizontalInput, verticalInput).normalized);
+        } else
+        {
+            OnNoMovement?.Invoke();
         }
     }
 }
