@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Soldier : NPC
 {
+    private float attackRadius = 10;
     bool destinationReached = false;
     Vector3 newDestination;
     [SerializeField] float patrolTimer = 2f;
@@ -17,11 +18,13 @@ public class Soldier : NPC
     }
 
     public IdleState idleState;
-    private float fireRate = .5f;
+    private FireArm fireArm;
+    [SerializeField] private Transform bulletTransform;
 
     protected override void Awake()
     {
         base.Awake();
+        fireArm = GetComponent<FireArm>();
         gameObject.tag = "Soldier";
         agent.stoppingDistance = 3.5f;
         damage = 2f;
@@ -55,7 +58,7 @@ public class Soldier : NPC
             case IdleState.IDLE:
                 if (ScanForTarget())
                 {
-                    if (Vector3.Distance(currentTarget.position, transform.position) <= 5)
+                    if (Vector3.Distance(currentTarget.position, transform.position) <= attackRadius)
                     {
                         idleState = IdleState.ATTACKING;
                     }
@@ -88,14 +91,42 @@ public class Soldier : NPC
     }
 
     private void Wander() {
-        agent.SetDestination(newPosition);
+       MoveToDestination();
+        if (ScanForTarget())
+        {
+            idleState = IdleState.ATTACKING;
+        }
+        else
+        {
+            idleState = IdleState.IDLE;
+        }
     }
+
+    protected override void MoveToDestination()
+    {
+        base.MoveToDestination();
+    }
+
 
     IEnumerator AttackCooldown()
     {
-        yield return new WaitForSeconds(fireRate);
-    }
 
-    
+            float timer = 0;
+            if (timer <= fireArm.shotCooldown)
+            {
+                Debug.Log(timer + "Timer");
+                timer++;
+                fireArm.canFire = false;
+            }
+            else {
+                Debug.Log(timer + "BANG");
+                fireArm.Fire(bulletTransform.position);
+
+                yield return new WaitForSeconds(fireArm.shotCooldown);
+                timer = 0;
+                fireArm.canFire = true;
+            }
+        
+    }    
 
 }
