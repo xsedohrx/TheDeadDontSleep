@@ -18,6 +18,11 @@ public class SoldierSpawner : SpawnSystem
         base.Start();
     }
 
+    protected override IEnumerator SpawnObject()
+    {
+        return base.SpawnObject();
+    }
+
     protected override void SpawnUnit()
     {
         base.SpawnUnit();
