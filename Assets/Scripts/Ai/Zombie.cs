@@ -7,17 +7,16 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Zombie : NPC
 {
-    List<GameObject> positionToLookFrom;
-    [SerializeField] Transform currentTarget = null;
-    Vector3 newPosition;
+
 
     private float wanderSpeed = 3.5f;
     private float chaseSpeed = 6f;
     private float attackCooldown = 1.0f;
-    private float wanderRange = 8.0f;
-    
+    private float sightRadius = 8.0f;
+    public float updateSpeed = .5f;
+    [SerializeField] private bool isAttacking;
     [SerializeField] bool canAttack = true;
-    [SerializeField] float damage;
+    
 
     public enum State { 
         WANDER,
@@ -32,31 +31,53 @@ public class Zombie : NPC
     protected override void Awake()
     {
         base.Awake();
-        positionToLookFrom = new List<GameObject>();
+
         gameObject.tag = "Zombie";
-        agent.stoppingDistance = 3.5f;
-        
+        agent.stoppingDistance = 1f;
+
+        tagToTarget = new string[] { "Human", "Soldier" };
+        damage = 2;
     }
 
-    private void Start()
+    protected override void Start()
     {
-        foreach (RayScript ray in gameObject.GetComponentsInChildren<RayScript>())
-        {
-            positionToLookFrom.Add(ray.gameObject);
-        }
-        
-
+        base.Start();
         humanState = HumanState.ZOMBIE;
-        canChange = false;
-        
-
-
+        canChange = false;        
+        StartCoroutine(StartBehavior());
     }
-
     protected override void Update()
     {
         base.Update();
-        StateSwitch();
+
+        //check if we can fire here otherwise we will only ever fire every 2 seconds!
+        if (currentTarget && GetTargetDistance(currentTarget) <= 1.15)
+        {
+            if (agent.velocity.magnitude > 0)
+            {
+                //stop the agent! we are close enough
+                agent.SetDestination(transform.position);
+            }
+
+            if (canAttack)
+            {
+                StartCoroutine(AttackCooldown());
+
+            }
+        }
+
+    }
+
+
+    IEnumerator StartBehavior()
+    {
+        WaitForSeconds wait = new WaitForSeconds(updateSpeed);
+        while (enabled)
+        {
+            StateSwitch();            
+            yield return wait;
+            //Debug.Log("Testing");
+        }
     }
 
     private void StateSwitch()
@@ -72,74 +93,83 @@ public class Zombie : NPC
                 break;
 
             case State.ATTACK:
-                StartCoroutine(AttackCooldown());
+                CheckAttack();
                 break;
         }
     }
 
     #endregion
     #region Target Functions
-    private void SetTarget(Transform target)
-    {
-        this.currentTarget = target;
-    }
-
-    private float GetTargetDistance(Transform target) {
-        return Vector3.Distance(target.position, transform.position);
-    }
-
+    protected override void SetTarget(Transform target){ base.SetTarget(target); }
+    private float GetTargetDistance(Transform target) { return Vector3.Distance(target.position, transform.position); }
 
     #endregion
 
-
-    IEnumerator AttackCooldown() {
-        if (scanForTarget())
+    protected void CheckAttack()
+    {
+        if (ScanForTarget())
         {
-            if (canAttack && GetTargetDistance(currentTarget) < agent.stoppingDistance)
+            if (GetTargetDistance(currentTarget) <= agent.stoppingDistance + 0.05)
             {
-                canAttack = false;
-                currentTarget.GetComponent<NPC>().TakeDamage(damage);
-                //
-                Debug.Log("Attacking");
-                yield return new WaitForSeconds(attackCooldown);
-                Debug.Log("Attacking complete");
-                canAttack = true;
-
+                //stop the agent! we are close enough
+                agent.SetDestination(transform.position);
+            }
+            else
+            {
+                //not close enough to shoot .. move closer
+                state = State.PERSUE;
             }
         }
         else
         {
+            //lost our target
+            agent.SetDestination(transform.position);
+            SetTarget(null);
             state = State.WANDER;
         }
-        
+
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        isAttacking = true;
+        canAttack = false;
+
+        currentTarget.GetComponent<NPC>().TakeDamage(damage);
+        yield return new WaitForSeconds(attackCooldown);
+
+        isAttacking = false;
+        canAttack = true;
     }
 
     void Wander()
     {
-        if (scanForTarget())
+        agent.speed = wanderSpeed;
+        MoveToDestination();
+        if (ScanForTarget())
         {
             state = State.PERSUE;
         }
-        agent.speed = wanderSpeed;
-        MoveToDestination();
-
     }
 
-    private void MoveToDestination()
+    protected override void MoveToDestination()
     {
-        newPosition = new Vector3(
-            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange),
-            transform.position.y,
-            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
-            );
-        agent.SetDestination(newPosition);
+        base.MoveToDestination();
     }
 
 
     void Persue() {
-        if (GetTargetDistance(currentTarget) < agent.stoppingDistance)
+        if (!ScanForTarget())
+        {
+            state = State.WANDER;
+        }
+        else if (GetTargetDistance(currentTarget) <= agent.stoppingDistance + 0.05)
         {
             state = State.ATTACK;
+        }
+        else if(GetTargetDistance(currentTarget) > visionRange)
+        {
+            state = State.WANDER;
         }
         else
         {
@@ -147,50 +177,6 @@ public class Zombie : NPC
             agent.speed = chaseSpeed;
             agent.SetDestination(currentTarget.position);
         }        
-    }
-
-
-
-    //zombie vision
-    bool scanForTarget()
-    {
-        for (int i = 0; i < positionToLookFrom.Count; i++)
-        {
-            Ray[] raysForSearch = new Ray[3];
-
-            Vector3 noAngle = positionToLookFrom[i].transform.forward;
-            Quaternion spreadAngle = Quaternion.AngleAxis(-20, new Vector3(0, 1, 0));
-            Vector3 negativeDirection = spreadAngle * noAngle;
-            spreadAngle = Quaternion.AngleAxis(20, new Vector3(0, 1, 0));
-            Vector3 positiveDirection = spreadAngle * noAngle;
-
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + noAngle * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + positiveDirection * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + negativeDirection * 10.0f, Color.red);
-
-            raysForSearch[0] = new Ray(positionToLookFrom[i].transform.position, noAngle);
-            raysForSearch[1] = new Ray(positionToLookFrom[i].transform.position, negativeDirection);
-            raysForSearch[2] = new Ray(positionToLookFrom[i].transform.position, positiveDirection);
-
-            foreach (Ray ray in raysForSearch)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 20))
-                {
-                    if (hit.transform.tag == "Player" || hit.transform.tag == "Human")
-                    {
-                        currentTarget = hit.transform;
-                        return true;
-                    }
-                    else
-                    {
-                        currentTarget = null;
-                    }
-                }
-            }
-        }
-        return false;
-
     }
 
 
