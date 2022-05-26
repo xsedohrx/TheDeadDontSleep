@@ -51,7 +51,7 @@ public class Soldier : NPC
     {
         base.Awake();
         fireArm = GetComponent<FireArm>();
-        transform.parent = GameObject.Find("Soldiers").transform;
+        //transform.parent = GameObject.Find("Soldiers").transform;
         gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
