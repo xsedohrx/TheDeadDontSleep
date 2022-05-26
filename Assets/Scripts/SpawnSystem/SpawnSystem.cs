@@ -20,7 +20,7 @@ public class SpawnSystem : MonoBehaviour
         StartCoroutine(SpawnObject());
     }
 
-    private IEnumerator SpawnObject()
+    protected IEnumerator SpawnObject()
     {
         if (unitsToSpawn > 0)
         {
@@ -34,7 +34,8 @@ public class SpawnSystem : MonoBehaviour
 
     protected virtual void SpawnUnit()
     {
-        
+
+        Debug.Log("Test SPawn");
     }
 
 }

@@ -21,7 +21,6 @@ public class SoldierSpawner : SpawnSystem
     protected override void SpawnUnit()
     {
         base.SpawnUnit();
-        //Debug.Log(soldierType.ToString());
         objectPooler.SpawnFromPool(soldierType.ToString(), transform.position, Quaternion.identity);
     }
 }
