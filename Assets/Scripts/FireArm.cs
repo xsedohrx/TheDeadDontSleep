@@ -16,11 +16,11 @@ public class FireArm : MonoBehaviour
     private void OnDisable(){ PlayerInput.OnMouseButtonPressed -= Fire; }
 
 
-    public virtual void Fire(Vector2 mousePos) {
-        Vector2 direction = mousePos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;        
+    public virtual void Fire() {
 
-        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);
+        var projectileObj = Instantiate(projectile, projectileSpawnPoint);
+        projectileObj.transform.localPosition = Vector3.zero;
+
     }
 
 }

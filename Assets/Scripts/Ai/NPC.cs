@@ -10,7 +10,12 @@ public class NPC : MonoBehaviour
     protected NavMeshAgent agent;
     protected Vector3 newPosition;
     private Animator anim;
+    protected string[] tagToTarget = new string[] {"Zombie"};
 
+    [SerializeField] protected bool debug = false;
+    [SerializeField] protected float visionRange = 20;
+    [SerializeField] protected float hearRange = 5;
+    [SerializeField] protected float viewingAngle = 120;
     [SerializeField] protected Transform currentTarget = null;
     [SerializeField] protected float health = 10;
     [SerializeField] protected float damage;
@@ -61,6 +66,18 @@ public class NPC : MonoBehaviour
     //Human state check
     void GetHumanState() {
         UpdateAnimator();
+
+        //if we have a target.. then keep looking at them!
+        if (currentTarget)
+        {
+            //we have a target - keep them in our eyes!
+
+            Vector3 dir = currentTarget.position - transform.position;
+            dir.y = 0;//This allows the object to only rotate on its y axis
+            Quaternion rot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, 1f * Time.deltaTime);
+            if( debug ) Debug.DrawRay(transform.position + Vector3.up * 1.5f, dir * dir.magnitude, Color.magenta);
+        }
         switch (humanState)
         {
             case HumanState.ALIVE:
@@ -187,6 +204,79 @@ public class NPC : MonoBehaviour
     protected virtual void SetTarget(Transform target)
     {
         this.currentTarget = target;
+    }
+
+    protected bool ScanForTarget()
+    {
+        GameObject foundTarget = null;
+        float foundTargetDistance = 0;
+
+        //first we get NPCs within our vision range
+        int scanLayerMask = 1 << 3; // behind mask layer is where NPCs live
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, visionRange, scanLayerMask);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            //check what type this target is
+            string targetTag = hitCollider.gameObject.tag;
+            if (!Array.Exists(tagToTarget, s => s == targetTag) ) continue;
+
+            Vector3 targetPosition = hitCollider.gameObject.transform.position;
+
+            var localTarget = transform.InverseTransformPoint(targetPosition);
+            // Use Trig to get my Angle IN RANGE 0 to 180
+            float targetAngle = Mathf.Abs(Mathf.Atan2(localTarget.x, localTarget.z) * Mathf.Rad2Deg);
+            
+            Vector3 targetDirection = targetPosition - transform.position;
+            float targetDistance = targetDirection.magnitude;
+
+            //if the target is within our hearing range (even if behind) OR within our view angle
+            if (targetDistance < hearRange || targetAngle < viewingAngle)
+            {
+                //possibly in line of sight - check no walls in the way..
+                //Bit shift the index of the layer (8) to get a bit mask (walls)
+                int wallLayerMask = 1 << 8;
+
+                RaycastHit hit;
+                // Does the ray intersect any walls
+                if (Physics.Raycast(transform.position + Vector3.up * 1.5f, targetDirection, out hit, targetDistance, wallLayerMask))
+                {
+                    //hit a wall.. not our target!
+                    if (debug) Debug.DrawRay(transform.position + Vector3.up * 1.5f, targetDirection * hit.distance, Color.red);
+                }
+                else
+                {
+                    //no walls. possible target
+                    if (debug) Debug.DrawRay(transform.position + Vector3.up * 1.5f, targetDirection * targetDistance, Color.green);
+
+                    //if first target or its closer than previous target then change to this
+                    if (foundTarget == null || foundTargetDistance > targetDistance)
+                    {
+                        foundTarget = hitCollider.gameObject;
+                        foundTargetDistance = targetDistance;
+                    }
+                }
+            }
+            else
+            {
+                if (debug)
+                {
+                    //Debug.Log(targetAngle);
+                    Debug.DrawRay(transform.position + Vector3.up * 1.5f, targetDirection, Color.blue);
+                }
+            }
+
+
+        }
+
+        if (foundTarget)
+        {
+            SetTarget(foundTarget.transform);
+            return true;
+        }
+
+        SetTarget(null);
+        return false;
     }
 
 }

@@ -14,10 +14,35 @@ public class Soldier : NPC
         PATROLLING,
         SEARCHING,
         CHASING,
-        ATTACKING
+        ATTACKING,
+        RETREAT
     }
 
-    public IdleState idleState;
+    private IdleState _idleState;
+    public IdleState idleState
+    {
+        get
+        {
+            return _idleState;
+        }
+        set
+        {
+            _idleState = value;
+            agent.speed = 3.5f;
+            agent.angularSpeed = 9000;
+            switch (value)
+            {
+                case IdleState.RETREAT:
+                    agent.speed = 2f; //slower running away
+                    agent.angularSpeed = 90; //dont deal with rotation while running
+                    break;
+                case IdleState.PATROLLING:
+                    SetTarget(null);
+                    break;
+            }
+        }
+    }
+
     private FireArm fireArm;
     [SerializeField] private Transform bulletTransform;
     private bool isAttacking = false;
@@ -28,7 +53,7 @@ public class Soldier : NPC
         fireArm = GetComponent<FireArm>();
         transform.parent = GameObject.Find("Soldiers").transform;
         gameObject.tag = "Soldier";
-        agent.stoppingDistance = 3.5f;
+        agent.stoppingDistance = 1.0f;
         damage = 2f;
     }
 
@@ -38,7 +63,54 @@ public class Soldier : NPC
         StartCoroutine(StartBehavior());
     }
 
-    protected override void Update(){ base.Update(); }
+    protected override void Update(){ 
+        base.Update();
+
+        //check if we can fire here otherwise we will only ever fire every 2 seconds!
+        if (currentTarget)
+        {
+
+            var currentRange = GetTargetDistance(currentTarget);
+            if (currentRange <= attackRadius)
+            {
+                if (currentRange <= 5)
+                {
+                    //run away !!
+                    //Debug.Log("Run away !!!");
+                    idleState = IdleState.RETREAT;
+                    Vector3 away = transform.position - currentTarget.position;
+                    away.y = 0;
+                    agent.SetDestination(transform.position + away.normalized * 7);
+                }
+                else
+                {
+                    idleState = IdleState.ATTACKING;
+                    if (agent.velocity.magnitude > 0)
+                    {
+                        //stop the agent! we are close enough
+                        agent.SetDestination(transform.position);
+                    }
+                }
+
+                if (fireArm.canFire)
+                {
+                    fireArm.Fire();
+
+                    StartCoroutine(AttackCooldown());
+
+                }
+            }
+            else
+            {
+                idleState = IdleState.ATTACKING;
+                //not close enough to shoot .. moce closer
+                agent.SetDestination(currentTarget.position);
+
+            }
+
+        }
+
+    }
 
     IEnumerator StartBehavior()
     {
@@ -63,8 +135,9 @@ public class Soldier : NPC
                 Wander();
                 break;
 
+            case IdleState.RETREAT:
             case IdleState.ATTACKING:
-                StartCoroutine(AttackCooldown());
+                CheckAttack();
                 break;
         }
     }
@@ -73,19 +146,7 @@ public class Soldier : NPC
         MoveToDestination();
         if (ScanForTarget())
         {
-            if (GetTargetDistance(currentTarget) <= attackRadius )
-            {
-                idleState = IdleState.ATTACKING;
-            }
-            else
-            {
-                idleState = IdleState.PATROLLING;
-            }
-            
-        }
-        else
-        {
-            idleState = IdleState.PATROLLING;
+            idleState = IdleState.ATTACKING;
         }
     }
 
@@ -97,77 +158,27 @@ public class Soldier : NPC
 
     IEnumerator AttackCooldown()
     {
+        isAttacking = true;
+        fireArm.canFire = false;
 
+        yield return new WaitForSeconds(fireArm.shotCooldown);
+
+        isAttacking = false;
+        fireArm.canFire = true;
+    }
+
+    protected void CheckAttack()
+    {
         if (ScanForTarget())
         {
-            if (fireArm.canFire && GetTargetDistance(currentTarget) <= attackRadius)
-            {
-                isAttacking = true;
-                fireArm.Fire(bulletTransform.position);
-                fireArm.canFire = false;
-                
-                yield return new WaitForSeconds(fireArm.shotCooldown);
-
-                if (currentTarget == null)
-                {
-                    isAttacking = false;
-                    idleState = IdleState.PATROLLING;
-                }
-
-                fireArm.canFire = true;
-
-            }
-            else
-            {
-                isAttacking = false;
-                fireArm.canFire = true;
-                agent.SetDestination(new Vector3(currentTarget.position.x - attackRadius, transform.position.y, currentTarget.position.z - attackRadius));
-
-            }
         }
         else
         {
-            SetTarget(null);
+            //lost our target
+            agent.SetDestination(transform.position);
+            idleState = IdleState.PATROLLING;
         }
 
-    }
-
-    protected bool ScanForTarget()
-    {
-        for (int i = 0; i < positionToLookFrom.Count; i++)
-        {
-            Ray[] raysForSearch = new Ray[3];
-
-            Vector3 noAngle = positionToLookFrom[i].transform.forward;
-            Quaternion spreadAngle = Quaternion.AngleAxis(-20, new Vector3(0, 1, 0));
-            Vector3 negativeDirection = spreadAngle * noAngle;
-            spreadAngle = Quaternion.AngleAxis(20, new Vector3(0, 1, 0));
-            Vector3 positiveDirection = spreadAngle * noAngle;
-
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + noAngle * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + positiveDirection * 10.0f, Color.red);
-            Debug.DrawLine(positionToLookFrom[i].transform.position, positionToLookFrom[i].transform.position + negativeDirection * 10.0f, Color.red);
-
-            raysForSearch[0] = new Ray(positionToLookFrom[i].transform.position, noAngle);
-            raysForSearch[1] = new Ray(positionToLookFrom[i].transform.position, negativeDirection);
-            raysForSearch[2] = new Ray(positionToLookFrom[i].transform.position, positiveDirection);
-
-            foreach (Ray ray in raysForSearch)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 20))
-                {                    
-                    if (hit.transform.tag == "Zombie")
-                    {
-                        Debug.Log("Hit a : " + hit.transform.name);
-                        SetTarget(hit.transform);
-                        return true;
-                    }
-                    
-                }
-            }
-        }
-        return false;
     }
 
 }
