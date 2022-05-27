@@ -800,7 +800,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c0bbd1b14d4bd499f7a76f4dfc4b0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: -488623393323196434, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
   rateOfFire: 5
 --- !u!4 &778289328
 Transform:
