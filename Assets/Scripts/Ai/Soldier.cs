@@ -181,4 +181,14 @@ public class Soldier : NPC
 
     }
 
+    public void ResetStats()
+    {
+        gameObject.tag = "Soldier";
+        agent.stoppingDistance = 1.0f;
+        damage = 2f;
+        health = 10;
+        idleState = IdleState.PATROLLING;
+        humanState = HumanState.ALIVE;
+    }
+
 }

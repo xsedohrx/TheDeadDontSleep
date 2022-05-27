@@ -7,29 +7,40 @@ public class SpawnSystem : MonoBehaviour
 {
     protected ObjectPooler objectPooler;
     public enum SpawnState { SPAWNING, WAITING, COUNTING };
-    private SpawnState state = SpawnState.COUNTING;
+    private SpawnState state = SpawnState.WAITING;
     public SpawnState State { get { return state; }}    
     [SerializeField] protected GameObject npcToSpawn;
 
     [SerializeField] private int unitsToSpawn = 10;
     [SerializeField] private float spawnDelay = .5f;
 
-    protected virtual void Awake(){ objectPooler = ObjectPooler.Instance; }
+    protected Transform[] spawnLocations;
+
+
+    protected virtual void Awake(){ 
+        objectPooler = ObjectPooler.Instance;
+        spawnLocations = GetComponentsInChildren<Transform>();
+    }
     protected virtual void Start()
     {
-        StartCoroutine(SpawnObject());
+        
+    }
+
+    protected void Update()
+    {
+        if (state == SpawnState.WAITING && unitsToSpawn > 0)
+        {
+            state = SpawnState.SPAWNING;
+            SpawnUnit();
+            unitsToSpawn--;
+            StartCoroutine(SpawnObject());
+        }
     }
 
     protected virtual IEnumerator SpawnObject()
     {
-        if (unitsToSpawn > 0)
-        {
-            SpawnUnit();
-            unitsToSpawn--;
-            yield return new WaitForSeconds(spawnDelay);
-
-        }
-
+        yield return new WaitForSeconds(spawnDelay);
+        state = SpawnState.WAITING;
     }
 
     protected virtual void SpawnUnit(){}

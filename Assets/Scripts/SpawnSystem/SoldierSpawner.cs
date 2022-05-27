@@ -26,6 +26,8 @@ public class SoldierSpawner : SpawnSystem
     protected override void SpawnUnit()
     {
         base.SpawnUnit();
-        objectPooler.SpawnFromPool(soldierType.ToString(), transform.position, Quaternion.identity);
+        GameObject soldierGO = objectPooler.SpawnFromPool(soldierType.ToString(), spawnLocations[Random.Range(0, spawnLocations.Length)].position, Quaternion.identity);
+        soldierGO.GetComponent<Soldier>()?.ResetStats();
+
     }
 }
