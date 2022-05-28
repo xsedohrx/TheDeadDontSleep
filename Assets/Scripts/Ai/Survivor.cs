@@ -16,10 +16,22 @@ public class Survivor : NPC
 
     #endregion
     #region Unity Functions
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+
+        SetPanickState(PanickState.CALM);
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+    }
+
     protected override void Start()
     {
         base.Start(); 
-        SetPanickState(PanickState.CALM);
     }
 
     protected override void Update()

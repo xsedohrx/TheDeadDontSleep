@@ -18,6 +18,8 @@ public class Soldier : NPC
         RETREAT
     }
 
+    
+    [SerializeField]
     private IdleState _idleState;
     public IdleState idleState
     {
@@ -47,20 +49,21 @@ public class Soldier : NPC
     [SerializeField] private Transform bulletTransform;
     private bool isAttacking = false;
 
-    protected override void Awake()
+    protected override void OnEnable()
     {
-        base.Awake();
-        fireArm = GetComponent<FireArm>();
-        transform.parent = GameObject.Find("Soldiers").transform;
+        base.OnEnable();
+        fireArm = GetComponent<FireArm>();        
         gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
+        StartCoroutine(StartBehavior());
     }
 
-    protected override void Start()
-    {
-        base.Start();        
-        StartCoroutine(StartBehavior());
+    protected override void OnDisable(){ base.OnDisable();}
+    protected override void Awake(){ base.Awake();}
+    protected override void Start(){ base.Start();}
+    protected override void MoveToDestination(){ 
+        base.MoveToDestination();
     }
 
     protected override void Update(){ 
@@ -150,10 +153,6 @@ public class Soldier : NPC
         }
     }
 
-    protected override void MoveToDestination()
-    {
-        base.MoveToDestination();
-    }
 
 
     IEnumerator AttackCooldown()
