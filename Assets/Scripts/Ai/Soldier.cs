@@ -98,13 +98,13 @@ public class Soldier : NPC
                     }
                 }
 
-                if (fireArm.canFire)
-                {
-                    StartCoroutine(fireArm.Fire());
+                //if (fireArm.canFire)
+                //{
+                //    StartCoroutine(fireArm.Fire());
 
-                    StartCoroutine(AttackCooldown());
+                //    StartCoroutine(AttackCooldown());
 
-                }
+                //}
             }
             else
             {
