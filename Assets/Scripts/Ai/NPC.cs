@@ -106,7 +106,7 @@ public class NPC : PoolableObject
 
     protected virtual void OnEnable() {
 
-        
+        agent.enabled = true;
     }
 
     protected override void OnDisable() { 
