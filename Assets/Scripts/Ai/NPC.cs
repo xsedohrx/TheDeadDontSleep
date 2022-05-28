@@ -205,7 +205,7 @@ public class NPC : PoolableObject
             transform.position.y,
             UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
             );
-        if (agent!= null)
+        if (agent.enabled)
             agent.SetDestination(newPosition);
     }
 
