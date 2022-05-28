@@ -104,8 +104,9 @@ public class NPC : PoolableObject
     }
     #endregion
 
-    protected virtual void OnEnable() { 
-    
+    protected virtual void OnEnable() {
+
+        
     }
 
     protected override void OnDisable() { 
@@ -204,7 +205,8 @@ public class NPC : PoolableObject
             transform.position.y,
             UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
             );
-        agent.SetDestination(newPosition);
+        if (agent!= null)
+            agent.SetDestination(newPosition);
     }
 
     

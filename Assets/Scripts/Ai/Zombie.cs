@@ -35,6 +35,9 @@ public class Zombie : NPC
         StartCoroutine(StartBehavior());
     }
 
+    protected override void OnDisable(){ base.OnDisable(); }
+    protected override void Start(){ base.Start(); }
+
     protected override void Awake()
     {
         base.Awake();
@@ -46,11 +49,6 @@ public class Zombie : NPC
         damage = 2;
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        
-    }
     protected override void Update()
     {
         base.Update();

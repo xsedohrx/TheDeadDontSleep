@@ -24,20 +24,13 @@ public class Survivor : NPC
         SetPanickState(PanickState.CALM);
     }
 
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-    }
+    protected override void OnDisable(){ base.OnDisable();}
+    protected override void Awake(){ base.Awake();}
+    protected override void MoveToDestination(){ base.MoveToDestination();}
+    protected override void SetTarget(Transform target){ base.SetTarget(target); }
+    protected override void Start(){ base.Start(); }
+    protected override void Update(){ HandlePanickState(); }
 
-    protected override void Start()
-    {
-        base.Start(); 
-    }
-
-    protected override void Update()
-    {
-        HandlePanickState();
-    }
 
     #endregion
     #region Panick State Switch
