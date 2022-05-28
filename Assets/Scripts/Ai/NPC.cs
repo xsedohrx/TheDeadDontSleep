@@ -27,7 +27,6 @@ public class NPC : PoolableObject
 
     protected bool canChange = true;
     private bool inTraining = false;
-
     private bool isTarget = false;  
 
     public bool IsTarget

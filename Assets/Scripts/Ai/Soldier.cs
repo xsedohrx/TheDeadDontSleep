@@ -52,6 +52,7 @@ public class Soldier : NPC
     protected override void OnEnable()
     {
         base.OnEnable();   
+        fireArm = GetComponent<FireArm>();
         gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
@@ -180,6 +181,16 @@ public class Soldier : NPC
             idleState = IdleState.PATROLLING;
         }
 
+    }
+
+    public void ResetStats()
+    {
+        gameObject.tag = "Soldier";
+        agent.stoppingDistance = 1.0f;
+        damage = 2f;
+        health = 10;
+        idleState = IdleState.PATROLLING;
+        humanState = HumanState.ALIVE;
     }
 
 }
