@@ -206,6 +206,7 @@ MonoBehaviour:
   zombieHealth: 10
   humanState: 0
   updateSpeed: 0.5
+  isAttacking: 0
   canAttack: 1
   state: 0
 --- !u!195 &8443112746711735415

@@ -15,13 +15,13 @@ public class Bullet : AutoDestroyPoolableObject
     }
 
 
-    public override void OnEnable()
+    protected override void OnEnable()
     {
         base.OnEnable();
         rigidBody.velocity = speed;
     }
 
-    public override void OnDisable() {
+    protected override void OnDisable() {
 
         base.OnDisable();
         rigidBody.velocity = Vector3.zero;

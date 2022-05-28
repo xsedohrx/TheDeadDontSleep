@@ -27,6 +27,16 @@ public class Zombie : NPC
 
     #region Unity Functions
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        humanState = HumanState.ZOMBIE;
+        canChange = false;
+        StartCoroutine(StartBehavior());
+    }
+
+    protected override void OnDisable(){ base.OnDisable(); }
+    protected override void Start(){ base.Start(); }
 
     protected override void Awake()
     {
@@ -39,13 +49,6 @@ public class Zombie : NPC
         damage = 2;
     }
 
-    protected override void Start()
-    {
-        base.Start();
-        humanState = HumanState.ZOMBIE;
-        canChange = false;        
-        StartCoroutine(StartBehavior());
-    }
     protected override void Update()
     {
         base.Update();
