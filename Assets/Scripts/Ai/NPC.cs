@@ -9,7 +9,7 @@ public class NPC : PoolableObject
 {
     protected NavMeshAgent agent;
     protected Vector3 newPosition;
-    private Animator anim;
+    public Animator anim;
     protected string[] tagToTarget = new string[] {"Zombie"};
 
     [SerializeField] protected bool debug = false;
@@ -20,7 +20,7 @@ public class NPC : PoolableObject
     [SerializeField] protected float health = 10;
     [SerializeField] protected float damage;
     protected float wanderRange = 5.0f;
-    [SerializeField] private float zombieHealth = 10;
+    [SerializeField] protected float zombieHealth = 10;
     protected List<GameObject> positionToLookFrom;
     GameObject killer;
     bool isControlled = false;
@@ -133,7 +133,7 @@ public class NPC : PoolableObject
     protected virtual void Update() => GetHumanState();
 
     //Check to see if npc should change or die!
-    private void CheckHealth()
+    protected virtual void CheckHealth()
     {
         if (Health <= 0)
         {

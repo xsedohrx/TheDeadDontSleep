@@ -7,7 +7,7 @@ public class PlayerMotor : MonoBehaviour
 {
     private FieldOfView fov;
     private Vector3 fovOffset = new Vector3(0, 1, 0);
-    private Animator anim;
+    private Player player;
 
     private Vector3 targetMovement = Vector3.zero;
     private Vector2 targetMovementAnimDirection = Vector2.zero;
@@ -22,7 +22,7 @@ public class PlayerMotor : MonoBehaviour
         {
             fov.SetOrigin(transform.position + fovOffset);
         }
-        anim = GetComponentInChildren<Animator>();
+        player = GetComponentInChildren<Player>();
     }
 
     [SerializeField] float movementSpeed = 5;
@@ -71,10 +71,10 @@ public class PlayerMotor : MonoBehaviour
                 currentMovementAnimDirection = Vector2.zero;
             }
 
-            if (anim)
+            if (player && player.anim)
             {
-                anim.SetFloat("velocityZ", currentMovementAnimDirection.x);
-                anim.SetFloat("velocityX", currentMovementAnimDirection.y);
+                player.anim.SetFloat("velocityZ", currentMovementAnimDirection.x);
+                player.anim.SetFloat("velocityX", currentMovementAnimDirection.y);
             }
 
             transform.position += currentMovement;
