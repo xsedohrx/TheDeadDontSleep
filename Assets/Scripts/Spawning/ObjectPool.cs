@@ -8,7 +8,7 @@ public class ObjectPool
     private List<PoolableObject> availableObjects;
 
     private ObjectPool(PoolableObject prefab, int size) { 
-    this.prefab = prefab;
+        this.prefab = prefab;
         availableObjects = new List<PoolableObject>();
     }
 

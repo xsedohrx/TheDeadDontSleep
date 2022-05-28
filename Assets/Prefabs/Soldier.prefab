@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2191746240535307811}
   - component: {fileID: 2949621394842092867}
   - component: {fileID: 1520639062589381518}
-  - component: {fileID: -3443896407007087765}
+  - component: {fileID: 2215899891951697139}
   m_Layer: 3
   m_Name: Soldier
   m_TagString: Soldier
@@ -103,13 +103,13 @@ MonoBehaviour:
   viewingAngle: 120
   currentTarget: {fileID: 0}
   health: 10
-  damage: 0
+  damage: 2
   zombieHealth: 10
   humanState: 0
   patrolTimer: 2
   _idleState: 1
   bulletTransform: {fileID: 1527157923353568293}
---- !u!114 &-3443896407007087765
+--- !u!114 &2215899891951697139
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,9 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2d4eb6bd9a15c49b6b1f78bbd4c6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotCooldown: 0.5
+  shotCooldown: 5
   canFire: 1
-  projectile: {fileID: 1176924553727530701, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
+  projectile: {fileID: -488623393323196434, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
   projectileSpawnPoint: {fileID: 1527157923353568293}
 --- !u!1 &3934732413462652070
 GameObject:

@@ -51,8 +51,7 @@ public class Soldier : NPC
 
     protected override void OnEnable()
     {
-        base.OnEnable();
-        fireArm = GetComponent<FireArm>();        
+        base.OnEnable();   
         gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
@@ -60,7 +59,10 @@ public class Soldier : NPC
     }
 
     protected override void OnDisable(){ base.OnDisable();}
-    protected override void Awake(){ base.Awake();}
+    protected override void Awake(){ 
+        base.Awake();
+        fireArm = GetComponent<FireArm>();
+    }
     protected override void Start(){ base.Start();}
     protected override void MoveToDestination(){ 
         base.MoveToDestination();
@@ -97,7 +99,7 @@ public class Soldier : NPC
 
                 if (fireArm.canFire)
                 {
-                    fireArm.Fire();
+                    StartCoroutine(fireArm.Fire());
 
                     StartCoroutine(AttackCooldown());
 
