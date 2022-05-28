@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-public class NPC : MonoBehaviour
+public class NPC : PoolableObject
 {
     protected NavMeshAgent agent;
     protected Vector3 newPosition;
@@ -104,6 +104,14 @@ public class NPC : MonoBehaviour
     }
     #endregion
 
+    protected virtual void OnEnable() { 
+    
+    }
+
+    protected override void OnDisable() { 
+        base.OnDisable();
+        agent.enabled = false;
+    }
 
     protected virtual void Awake()
     {

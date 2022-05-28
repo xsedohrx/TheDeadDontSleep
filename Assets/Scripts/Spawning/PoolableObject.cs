@@ -6,7 +6,7 @@ public class PoolableObject : MonoBehaviour
 {
     public ObjectPool parent;
 
-    public virtual void OnDisable() {
+    protected virtual void OnDisable() {
         parent.ReturnObjectToPool(this);
     }
 }

@@ -107,7 +107,6 @@ MonoBehaviour:
   zombieHealth: 10
   humanState: 0
   patrolTimer: 2
-  idleState: 0
   bulletTransform: {fileID: 1527157923353568293}
 --- !u!114 &1790188392160799829
 MonoBehaviour:
