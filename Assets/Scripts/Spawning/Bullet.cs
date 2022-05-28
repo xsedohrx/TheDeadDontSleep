@@ -7,7 +7,8 @@ public class Bullet : AutoDestroyPoolableObject
 {
     [HideInInspector]
     public Rigidbody rigidBody;
-    public Vector3 speed = new Vector3(200, 0);
+    public float speed = 5000f;
+    public float projectileDamage = 4;
 
     private void Awake()
     {
@@ -18,13 +19,30 @@ public class Bullet : AutoDestroyPoolableObject
     protected override void OnEnable()
     {
         base.OnEnable();
-        rigidBody.velocity = speed;
+        rigidBody.isKinematic = false;
+
+        rigidBody.AddForce(transform.forward * speed);
     }
 
-    protected override void OnDisable() {
-
-        base.OnDisable();
+    protected override void OnDisable() 
+    {
         rigidBody.velocity = Vector3.zero;
+        base.OnDisable();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Human" || collision.gameObject.tag == "Soldier")
+        {
+            NPC npc = collision.gameObject.GetComponent<NPC>();
+            npc?.TakeDamage(projectileDamage);
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            //dont allow bounce off other objects
+            gameObject.SetActive(false);
+        }
     }
 
 }

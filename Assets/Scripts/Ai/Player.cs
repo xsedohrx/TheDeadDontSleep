@@ -12,6 +12,15 @@ class Player : NPC
     [SerializeField] private GameObject SWAT;
     [SerializeField] private GameObject zombie;
 
+    protected override void OnEnable(){ 
+        PlayerInput.OnMouseButtonPressed += Attack;
+        base.OnEnable();
+    }
+    protected override void OnDisable(){ 
+        PlayerInput.OnMouseButtonPressed -= Attack;
+        base.OnDisable();
+    }
+
     protected override void CheckHealth()
     {
         if (Health <= 0)
@@ -94,6 +103,16 @@ class Player : NPC
             health = zombieHealth;
             
             Destroy(closestZombie.gameObject);
+        }
+    }
+
+    public void Attack()
+    {
+        //do we have a gun.. 
+        FireArm gun = GetComponent<FireArm>();
+        if(gun)
+        {
+            gun.Fire();
         }
     }
 }

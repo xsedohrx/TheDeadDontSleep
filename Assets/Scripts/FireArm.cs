@@ -13,10 +13,6 @@ public class FireArm : MonoBehaviour
     [SerializeField] Bullet projectile;
     [SerializeField] Transform projectileSpawnPoint;    
 
-    //private void OnEnable(){ PlayerInput.OnMouseButtonPressed += Fire; }
-    //private void OnDisable(){ PlayerInput.OnMouseButtonPressed -= Fire; }
-
-
     private void Awake()
     {
         bulletPool = ObjectPool.CreateInstance(projectile, 30);
@@ -24,25 +20,26 @@ public class FireArm : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Fire());
     }
 
-    public IEnumerator Fire()
+    public void Fire()
     {
-        WaitForSeconds wait = new WaitForSeconds(1.0f / shotCooldown);
-
-        while (canFire)
+        if(canFire)
         {
             PoolableObject instance = bulletPool.GetObject();
-            if (instance != null)
-            {
-                instance.transform.SetParent(transform, false);
-                instance.transform.localPosition = Vector3.zero;
-            }
+            instance.transform.SetParent(projectileSpawnPoint);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = Quaternion.identity;
+            instance.gameObject.SetActive(true);
+            instance.transform.SetParent(null);
             canFire = false;
-            yield return wait;
-            canFire = true;
+            StartCoroutine(PauseBetweenFire());
         }
     }
 
+    public IEnumerator PauseBetweenFire()
+    {
+        yield return new WaitForSeconds(shotCooldown);
+        canFire = true;
+    }
 }
