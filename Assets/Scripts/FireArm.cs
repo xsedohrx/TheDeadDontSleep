@@ -7,29 +7,39 @@ public class FireArm : MonoBehaviour
 {
 
     protected float damage;
-    protected float shotCooldown;
-    [SerializeField] GameObject projectile;
+    public float shotCooldown;
+    public bool canFire = true;
+    private ObjectPool bulletPool;
+    [SerializeField] Bullet projectile;
     [SerializeField] Transform projectileSpawnPoint;    
 
-    private void OnEnable()
+    private void Awake()
     {
-        PlayerInput.OnMouseButtonPressed += Fire;
-
+        bulletPool = ObjectPool.CreateInstance(projectile, 30);
     }
-    private void OnDisable()
+
+    private void Start()
     {
-        PlayerInput.OnMouseButtonPressed -= Fire;
     }
 
-
-    protected virtual void Fire(Vector2 mousePos) {
-        Vector2 direction = mousePos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;        
-
-        Instantiate(projectile, projectileSpawnPoint.position, Quaternion.identity);
+    public void Fire()
+    {
+        if(canFire)
+        {
+            PoolableObject instance = bulletPool.GetObject();
+            instance.transform.SetParent(projectileSpawnPoint);
+            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localRotation = Quaternion.identity;
+            instance.gameObject.SetActive(true);
+            instance.transform.SetParent(null);
+            canFire = false;
+            StartCoroutine(PauseBetweenFire());
+        }
     }
 
-    
-
-
+    public IEnumerator PauseBetweenFire()
+    {
+        yield return new WaitForSeconds(shotCooldown);
+        canFire = true;
+    }
 }

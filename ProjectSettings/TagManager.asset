@@ -6,16 +6,20 @@ TagManager:
   tags:
   - Unit
   - Projectile
+  - Human
+  - Ray
+  - Zombie
+  - Soldier
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - BehindMask
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Mask
+  - Blackout
+  - MapObjects
   - 
   - 
   - 
