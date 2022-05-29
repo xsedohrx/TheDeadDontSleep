@@ -53,7 +53,6 @@ public class Soldier : NPC
     {
         base.OnEnable();   
         fireArm = GetComponent<FireArm>();
-        gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
         StartCoroutine(StartBehavior());
@@ -185,7 +184,6 @@ public class Soldier : NPC
 
     public void ResetStats()
     {
-        gameObject.tag = "Soldier";
         agent.stoppingDistance = 1.0f;
         damage = 2f;
         health = 10;

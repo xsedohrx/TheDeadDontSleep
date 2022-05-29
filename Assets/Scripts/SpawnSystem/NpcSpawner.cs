@@ -26,6 +26,7 @@ public class NpcSpawner : SpawnSystem
     protected override void SpawnUnit()
     {
         base.SpawnUnit();
-        objectPooler.SpawnFromPool(survivorType.ToString(), transform.position, Quaternion.identity);
+        PoolableObject poolableObject = objectPooler.GetObject();
+        poolableObject.gameObject.SetActive(true);
     }
 }

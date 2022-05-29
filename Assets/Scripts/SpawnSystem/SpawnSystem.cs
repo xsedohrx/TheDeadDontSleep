@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class SpawnSystem : MonoBehaviour
 {
-    protected ObjectPooler objectPooler;
+    protected ObjectPool objectPooler;
     public enum SpawnState { SPAWNING, WAITING, COUNTING };
     private SpawnState state = SpawnState.WAITING;
     public SpawnState State { get { return state; }}    
-    [SerializeField] protected GameObject npcToSpawn;
+    [SerializeField] protected PoolableObject npcToSpawn;
 
     [SerializeField] private int unitsToSpawn = 10;
     [SerializeField] private float spawnDelay = .5f;
@@ -18,7 +18,7 @@ public class SpawnSystem : MonoBehaviour
 
 
     protected virtual void Awake(){ 
-        objectPooler = ObjectPooler.Instance;
+        objectPooler = ObjectPool.CreateInstance(npcToSpawn, 30);
         spawnLocations = GetComponentsInChildren<Transform>();
     }
     protected virtual void Start()

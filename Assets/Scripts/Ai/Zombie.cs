@@ -193,5 +193,15 @@ public class Zombie : NPC
         }        
     }
 
+    public void ResetStats()
+    {
+        agent.stoppingDistance = 1.0f;
+        damage = 2f;
+        health = 10;
+        state = State.WANDER;
+        canAttack = true;
+        humanState = HumanState.ALIVE;
+
+    }
 
 }

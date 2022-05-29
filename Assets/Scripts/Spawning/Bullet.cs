@@ -29,9 +29,6 @@ public class Bullet : AutoDestroyPoolableObject
         // Does the ray intersect any walls
         if (Physics.Raycast(transform.position, transform.forward, out hit, speed))
         {
-            Debug.LogWarning("Hit");
-            Debug.LogWarning(hit);
-            Debug.LogWarning(hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == "Zombie" || hit.transform.gameObject.tag == "Human" || hit.transform.gameObject.tag == "Soldier")
             {
                 NPC npc = hit.transform.gameObject.GetComponent<NPC>();

@@ -192,8 +192,8 @@ public class NPC : PoolableObject
     }
 
     protected virtual void Death() {
-        
-        GameObject.Destroy(gameObject);
+
+        gameObject.SetActive(false);
     }
 
     private void StartTraining() {

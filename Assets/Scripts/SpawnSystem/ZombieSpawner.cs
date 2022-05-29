@@ -27,8 +27,12 @@ public class ZombieSpawner : SpawnSystem
     protected override void SpawnUnit()
     {
         base.SpawnUnit();
-        objectPooler.SpawnFromPool(zombieType.ToString(), transform.position, Quaternion.identity);
+        PoolableObject poolableObject = objectPooler.GetObject();
+        poolableObject.gameObject.SetActive(true);
 
+        poolableObject.gameObject.transform.position = spawnLocations[Random.Range(0, spawnLocations.Length)].position;
+        poolableObject.gameObject.transform.rotation = Quaternion.identity;
 
+        (poolableObject as Zombie)?.ResetStats();
     }
 }

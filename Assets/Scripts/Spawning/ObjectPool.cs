@@ -43,15 +43,16 @@ public class ObjectPool
 
     }
 
-    public void ReturnObjectToPool(PoolableObject poolableObject) { 
+    public void ReturnObjectToPool(PoolableObject poolableObject) {
         availableObjects.Add(poolableObject);
         //poolableObject.transform.SetParent(poolObject.transform);
     }
 
 
     public PoolableObject GetObject() {
-        if (availableObjects.Count == 0)
+        if (availableObjects.Count <= 5)
         {
+            Debug.LogError("Make more ..");
             //opps we ran out.. make more!
             CreateObjects(10);
         }
