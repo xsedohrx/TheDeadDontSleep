@@ -71,7 +71,7 @@ public class NPC : PoolableObject
         UpdateAnimator();
 
         //if we have a target.. then keep looking at them!
-        if (currentTarget)
+        if (currentTarget && agent.enabled)
         {
             //we have a target - keep them in our eyes!
 
@@ -122,7 +122,7 @@ public class NPC : PoolableObject
         positionToLookFrom = new List<GameObject>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
-        objectPool = ObjectPool.CreateInstance(zombiePrefab, 30);
+        if(zombiePrefab) objectPool = ObjectPool.CreateInstance(zombiePrefab, 30);
     }
 
     protected virtual void Start()
@@ -170,10 +170,12 @@ public class NPC : PoolableObject
             var zombie = objectPool.GetObject().GetComponent<Zombie>();
             zombie.transform.localPosition = transform.localPosition;
             zombie.transform.localRotation = transform.localRotation;
+            gameObject.SetActive(false); //this npc is dead
+            zombie.gameObject.SetActive(true); //the zombie lives
+            zombie.agent.enabled = false;
             zombie.anim.SetTrigger("revive");
-
-            yield return new WaitForSeconds(3f);
-            agent.enabled = true;
+            Debug.LogError("reviving");
+            zombie.StartReviveCooldown();
         }
     }
 

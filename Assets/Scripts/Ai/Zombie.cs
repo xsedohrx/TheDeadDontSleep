@@ -45,7 +45,7 @@ public class Zombie : NPC
         gameObject.tag = "Zombie";
         agent.stoppingDistance = 1f;
 
-        tagToTarget = new string[] { "Human", "Soldier" };
+        tagToTarget = new string[] { "Human", "Soldier", "Player" };
         damage = 2;
     }
 
@@ -56,7 +56,7 @@ public class Zombie : NPC
         //check if we can fire here otherwise we will only ever fire every 2 seconds!
         if (currentTarget && GetTargetDistance(currentTarget) <= 1.15)
         {
-            if (agent.velocity.magnitude > 0)
+            if (agent.enabled && agent.velocity.magnitude > 0)
             {
                 //stop the agent! we are close enough
                 agent.SetDestination(transform.position);
@@ -115,7 +115,7 @@ public class Zombie : NPC
             if (GetTargetDistance(currentTarget) <= agent.stoppingDistance + 0.05)
             {
                 //stop the agent! we are close enough
-                agent.SetDestination(transform.position);
+                if(agent.enabled) agent.SetDestination(transform.position);
             }
             else
             {
@@ -126,11 +126,23 @@ public class Zombie : NPC
         else
         {
             //lost our target
-            agent.SetDestination(transform.position);
+            if(agent.enabled) agent.SetDestination(transform.position);
             SetTarget(null);
             state = State.WANDER;
         }
 
+    }
+
+    public void StartReviveCooldown()
+    {
+        StartCoroutine(ReviveCooldown());
+    }
+
+    IEnumerator ReviveCooldown()
+    {
+        yield return new WaitForSeconds(3.5f);
+        agent.enabled = true;
+        Debug.LogError("done");
     }
 
     IEnumerator AttackCooldown()
@@ -147,7 +159,7 @@ public class Zombie : NPC
 
     void Wander()
     {
-        agent.speed = wanderSpeed;
+        if(agent.enabled) agent.speed = wanderSpeed;
         MoveToDestination();
         if (ScanForTarget())
         {
@@ -178,7 +190,7 @@ public class Zombie : NPC
         {
             currentTarget.GetComponent<NPC>().IsTarget = true;
             agent.speed = chaseSpeed;
-            agent.SetDestination(currentTarget.position);
+            if(agent.enabled) agent.SetDestination(currentTarget.position);
         }        
     }
 

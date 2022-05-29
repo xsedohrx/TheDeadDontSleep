@@ -106,6 +106,7 @@ MonoBehaviour:
   health: 10
   damage: 2
   zombieHealth: 10
+  zombiePrefab: {fileID: 1853553909747289572, guid: f3d358d7f40dccc40a9565e8f613a8bd, type: 3}
   humanState: 0
   patrolTimer: 2
   _idleState: 1

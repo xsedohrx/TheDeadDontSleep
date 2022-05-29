@@ -12,6 +12,12 @@ class Player : NPC
     [SerializeField] private GameObject SWAT;
     [SerializeField] private GameObject zombie;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        anim = SWAT.GetComponent<Animator>();
+    }
+
     protected override void OnEnable(){ 
         PlayerInput.OnMouseButtonPressed += Attack;
         base.OnEnable();
@@ -115,8 +121,8 @@ class Player : NPC
             transform.rotation = closestZombie.transform.rotation;
 
             health = zombieHealth;
-            
-            Destroy(closestZombie.gameObject);
+
+            closestZombie.gameObject.SetActive(false);
         }
     }
 
