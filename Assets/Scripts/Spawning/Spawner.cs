@@ -61,27 +61,19 @@ public class Spawner : MonoBehaviour
     private void DoSpawnUnit(int spawnIndex)
     {
         PoolableObject poolableObject = unitObjectPool[spawnIndex].GetObject();
-
-        if (poolableObject != null)
-        {
-            NPC unit = poolableObject.GetComponent<NPC>();
+        
+        NPC unit = poolableObject.GetComponent<NPC>();
             
-            int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, -1)) {
-                NavMeshAgent agent = unit.GetComponent<NavMeshAgent>();
-                agent.Warp(hit.position);                
-                //Enable unit
-                agent.enabled = true;
-            }
-
-
-            
+        int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, -1)) {
+            NavMeshAgent agent = unit.GetComponent<NavMeshAgent>();
+            agent.Warp(hit.position);                
+            //Enable unit
+            agent.enabled = true;
         }
-        else
-        {
-            Debug.Log($"Unable to fetch unit of type {spawnIndex} ");
-        }
+
+        poolableObject.gameObject.SetActive(true);
     }
 
     public enum SpawnMethod { 

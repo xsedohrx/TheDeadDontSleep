@@ -20,6 +20,8 @@ public class Bullet : AutoDestroyPoolableObject
     {
         base.OnEnable();
         rigidBody.isKinematic = false;
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
 
         rigidBody.AddForce(transform.forward * speed);
     }
@@ -36,11 +38,13 @@ public class Bullet : AutoDestroyPoolableObject
         {
             NPC npc = collision.gameObject.GetComponent<NPC>();
             npc?.TakeDamage(projectileDamage);
+            rigidBody.isKinematic = true;
             gameObject.SetActive(false);
         }
         else
         {
             //dont allow bounce off other objects
+            rigidBody.isKinematic = true;
             gameObject.SetActive(false);
         }
     }
