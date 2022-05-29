@@ -454,13 +454,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12f6d49573d68ec4cae18a7a0a60770d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMultiplier: 1000
+  timeMultiplier: 500
   startHour: 7
   timeText: {fileID: 2130328124}
   sunLight: {fileID: 956819733}
   sunRiseHour: 6
   sunSetHour: 21
-  dayAmbientLight: {r: 0.56078434, g: 0.6039216, b: 0.68235296, a: 0}
+  dayAmbientLight: {r: 0.7924528, g: 0.78537124, b: 0.66909933, a: 0}
   nightAmbientLight: {r: 0.15686275, g: 0.3137255, b: 0.39215687, a: 0}
   lightChangeCurve:
     serializedVersion: 2
