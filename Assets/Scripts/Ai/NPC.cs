@@ -27,7 +27,11 @@ public class NPC : PoolableObject
 
     protected bool canChange = true;
     private bool inTraining = false;
-    private bool isTarget = false;  
+    private bool isTarget = false;
+
+    [SerializeField]
+    protected Zombie zombiePrefab;
+    private ObjectPool objectPool;
 
     public bool IsTarget
     {
@@ -67,7 +71,7 @@ public class NPC : PoolableObject
         UpdateAnimator();
 
         //if we have a target.. then keep looking at them!
-        if (currentTarget)
+        if (currentTarget && agent.enabled)
         {
             //we have a target - keep them in our eyes!
 
@@ -118,6 +122,7 @@ public class NPC : PoolableObject
         positionToLookFrom = new List<GameObject>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        if(zombiePrefab) objectPool = ObjectPool.CreateInstance(zombiePrefab, 30);
     }
 
     protected virtual void Start()
@@ -139,8 +144,6 @@ public class NPC : PoolableObject
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
-                Destroy(gameObject.GetComponent<PlayerMotor>());
-
             }
             else
             {
@@ -153,12 +156,26 @@ public class NPC : PoolableObject
     private IEnumerator ChangeToZombie() {
         if (canChange)
         {
-            yield return new WaitForSeconds(.5f);
+            health = 1000; //invincible while we change
             canChange = false;
-            health = zombieHealth;
-            humanState = HumanState.ZOMBIE;
-            gameObject.AddComponent<Zombie>();
-            Destroy(this);
+            FireArm firearm = GetComponent<FireArm>();
+            if (firearm) firearm.enabled = false;
+            
+            agent.enabled = false;
+            //animation
+            anim.SetTrigger("dead");
+
+            yield return new WaitForSeconds(3.5f);
+
+            var zombie = objectPool.GetObject().GetComponent<Zombie>();
+            zombie.transform.localPosition = transform.localPosition;
+            zombie.transform.localRotation = transform.localRotation;
+            gameObject.SetActive(false); //this npc is dead
+            zombie.gameObject.SetActive(true); //the zombie lives
+            zombie.agent.enabled = false;
+            zombie.anim.SetTrigger("revive");
+            Debug.LogError("reviving");
+            zombie.StartReviveCooldown();
         }
     }
 
@@ -215,6 +232,55 @@ public class NPC : PoolableObject
         this.currentTarget = target;
     }
 
+    public float CalculatePathLength(Vector3 targetPosition)
+    {
+        // Create a path and set it based on a target position.
+        NavMeshPath path = new NavMeshPath();
+        if( !NavMesh.CalculatePath(transform.position, targetPosition, NavMesh.AllAreas, path) )
+        {
+            //error making path
+            return float.PositiveInfinity;
+        }
+
+        if (path.status != NavMeshPathStatus.PathComplete)
+        {
+            //path couldnt actually reach destination
+            return float.PositiveInfinity;
+        }
+
+        if (debug)
+        {
+            for (int i = 0; i < path.corners.Length - 1; i++)
+                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+        }
+
+        // Create an array of points which is the length of the number of corners in the path + 2.
+        Vector3[] allWayPoints = new Vector3[path.corners.Length + 2];
+
+        // The first point is the enemy's position.
+        allWayPoints[0] = transform.position;
+
+        // The last point is the target position.
+        allWayPoints[allWayPoints.Length - 1] = targetPosition;
+
+        // The points inbetween are the corners of the path.
+        for (int i = 0; i < path.corners.Length; i++)
+        {
+            allWayPoints[i + 1] = path.corners[i];
+        }
+
+        // Create a float to store the path length that is by default 0.
+        float pathLength = 0;
+
+        // Increment the path length by an amount equal to the distance between each waypoint and the next.
+        for (int i = 0; i < allWayPoints.Length - 1; i++)
+        {
+            pathLength += Vector3.Distance(allWayPoints[i], allWayPoints[i + 1]);
+        }
+
+        return pathLength;
+    }
+
     protected bool ScanForTarget()
     {
         GameObject foundTarget = null;
@@ -261,8 +327,13 @@ public class NPC : PoolableObject
                     //if first target or its closer than previous target then change to this
                     if (foundTarget == null || foundTargetDistance > targetDistance)
                     {
-                        foundTarget = hitCollider.gameObject;
-                        foundTargetDistance = targetDistance;
+                        float distance = CalculatePathLength(hitCollider.transform.position);
+                        //if we cant reach it and its not VERY far then set destination
+                        if (distance != float.PositiveInfinity && distance < visionRange * 2)
+                        {
+                            foundTarget = hitCollider.gameObject;
+                            foundTargetDistance = targetDistance;
+                        }
                     }
                 }
             }

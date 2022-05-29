@@ -86,12 +86,12 @@ public class Soldier : NPC
                     idleState = IdleState.RETREAT;
                     Vector3 away = transform.position - currentTarget.position;
                     away.y = 0;
-                    agent.SetDestination(transform.position + away.normalized * 7);
+                    if (agent.enabled) agent.SetDestination(transform.position + away.normalized * 7);
                 }
                 else
                 {
                     idleState = IdleState.ATTACKING;
-                    if (agent.velocity.magnitude > 0)
+                    if (agent.enabled && agent.velocity.magnitude > 0)
                     {
                         //stop the agent! we are close enough
                         agent.SetDestination(transform.position);
@@ -110,7 +110,7 @@ public class Soldier : NPC
             {
                 idleState = IdleState.ATTACKING;
                 //not close enough to shoot .. moce closer
-                agent.SetDestination(currentTarget.position);
+                if (agent.enabled) agent.SetDestination(currentTarget.position);
 
             }
 
@@ -177,7 +177,7 @@ public class Soldier : NPC
         else
         {
             //lost our target
-            agent.SetDestination(transform.position);
+            if (agent.enabled) agent.SetDestination(transform.position);
             idleState = IdleState.PATROLLING;
         }
 

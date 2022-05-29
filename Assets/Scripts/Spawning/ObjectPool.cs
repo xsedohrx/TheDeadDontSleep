@@ -45,8 +45,7 @@ public class ObjectPool
 
     public void ReturnObjectToPool(PoolableObject poolableObject) { 
         availableObjects.Add(poolableObject);
-        poolableObject.transform.SetParent(poolObject.transform);
-        poolableObject.gameObject.SetActive(false);
+        //poolableObject.transform.SetParent(poolObject.transform);
     }
 
 
