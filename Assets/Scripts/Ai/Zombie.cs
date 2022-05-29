@@ -31,8 +31,13 @@ public class Zombie : NPC
     {
         base.OnEnable();
         humanState = HumanState.ZOMBIE;
+        state = State.WANDER;
         canChange = false;
         StartCoroutine(StartBehavior());
+        gameObject.tag = "Zombie";
+        agent.stoppingDistance = 1f;
+        tagToTarget = new string[] { "Human", "Soldier", "Player" };
+        damage = 2;
     }
 
     protected override void OnDisable(){ base.OnDisable(); }
@@ -41,12 +46,6 @@ public class Zombie : NPC
     protected override void Awake()
     {
         base.Awake();
-
-        gameObject.tag = "Zombie";
-        agent.stoppingDistance = 1f;
-
-        tagToTarget = new string[] { "Human", "Soldier", "Player" };
-        damage = 2;
     }
 
     protected override void Update()
@@ -71,6 +70,22 @@ public class Zombie : NPC
 
     }
 
+    protected override void Death()
+    {
+        StartCoroutine(DeathBehavior());
+        
+    }
+
+    IEnumerator DeathBehavior()
+    {
+        health = 10000; // so we dont keep triggerring death
+        humanState = HumanState.ALIVE;
+        anim.SetTrigger("dead");
+        agent.enabled = false;
+        gameObject.tag = "Untagged";
+        yield return new WaitForSeconds(10);
+        gameObject.SetActive(false);
+    }
 
     IEnumerator StartBehavior()
     {
@@ -150,6 +165,7 @@ public class Zombie : NPC
         canAttack = false;
 
         currentTarget.GetComponent<NPC>().TakeDamage(damage);
+        anim.SetTrigger("attack");
         yield return new WaitForSeconds(attackCooldown);
 
         isAttacking = false;

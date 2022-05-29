@@ -141,6 +141,7 @@ public class NPC : PoolableObject
     {
         if (Health <= 0)
         {
+            health = 0;
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
@@ -149,7 +150,6 @@ public class NPC : PoolableObject
             {
                 Death();
             }
-            health = 0;
         }
     }
 
