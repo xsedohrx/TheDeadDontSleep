@@ -822,8 +822,8 @@ MonoBehaviour:
   startHour: 7
   timeText: {fileID: 2130328124}
   sunLight: {fileID: 956819733}
-  sunRiseHour: 7
-  sunSetHour: 20.5
+  sunRiseHour: 6
+  sunSetHour: 21
   dayAmbientLight: {r: 0.56078434, g: 0.6039216, b: 0.68235296, a: 0}
   nightAmbientLight: {r: 0.15686275, g: 0.3137255, b: 0.39215687, a: 0}
   lightChangeCurve:
@@ -839,14 +839,14 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.049768776
-      value: 0.7561902
-      inSlope: 0.8026281
-      outSlope: 0.8026281
+      time: 0.3247703
+      value: 0.72080505
+      inSlope: 0.82164186
+      outSlope: 0.82164186
       tangentMode: 0
       weightedMode: 3
       inWeight: 1
-      outWeight: 0.33333334
+      outWeight: 0.27802345
     - serializedVersion: 3
       time: 1
       value: 1
@@ -3858,6 +3858,7 @@ Transform:
   m_Children:
   - {fileID: 1081856443}
   - {fileID: 1054294534}
+  - {fileID: 1261716361}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4878,6 +4879,68 @@ Transform:
   m_Father: {fileID: 538850941}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1261716358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1261716361}
+  - component: {fileID: 1261716360}
+  - component: {fileID: 1261716359}
+  m_Layer: 0
+  m_Name: UIDocument
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1261716359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261716358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f120d5f19f7cb64a8c230fc118b093c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIWeaponIconArr: []
+--- !u!114 &1261716360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261716358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 0063c8b47440713488dc6b91df7f45ce, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 1e707991d24bdfb40aac6ced989a7879, type: 3}
+  m_SortingOrder: 0
+--- !u!4 &1261716361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261716358}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 824796383}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1357297948
 GameObject:
   m_ObjectHideFlags: 0
@@ -6496,11 +6559,11 @@ RectTransform:
   m_Father: {fileID: 1054294534}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &2130328124
 MonoBehaviour:
   m_ObjectHideFlags: 0
