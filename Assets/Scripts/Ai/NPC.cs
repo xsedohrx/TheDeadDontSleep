@@ -27,7 +27,11 @@ public class NPC : PoolableObject
 
     protected bool canChange = true;
     private bool inTraining = false;
-    private bool isTarget = false;  
+    private bool isTarget = false;
+
+    [SerializeField]
+    protected Zombie zombiePrefab;
+    private ObjectPool objectPool;
 
     public bool IsTarget
     {
@@ -118,6 +122,7 @@ public class NPC : PoolableObject
         positionToLookFrom = new List<GameObject>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
+        objectPool = ObjectPool.CreateInstance(zombiePrefab, 30);
     }
 
     protected virtual void Start()
@@ -139,8 +144,6 @@ public class NPC : PoolableObject
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
-                Destroy(gameObject.GetComponent<PlayerMotor>());
-
             }
             else
             {
@@ -153,12 +156,24 @@ public class NPC : PoolableObject
     private IEnumerator ChangeToZombie() {
         if (canChange)
         {
-            yield return new WaitForSeconds(.5f);
+            health = 1000; //invincible while we change
             canChange = false;
-            health = zombieHealth;
-            humanState = HumanState.ZOMBIE;
-            gameObject.AddComponent<Zombie>();
-            Destroy(this);
+            FireArm firearm = GetComponent<FireArm>();
+            if (firearm) firearm.enabled = false;
+            
+            agent.enabled = false;
+            //animation
+            anim.SetTrigger("dead");
+
+            yield return new WaitForSeconds(3.5f);
+
+            var zombie = objectPool.GetObject().GetComponent<Zombie>();
+            zombie.transform.localPosition = transform.localPosition;
+            zombie.transform.localRotation = transform.localRotation;
+            zombie.anim.SetTrigger("revive");
+
+            yield return new WaitForSeconds(3f);
+            agent.enabled = true;
         }
     }
 

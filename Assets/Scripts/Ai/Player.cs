@@ -46,17 +46,30 @@ class Player : NPC
         health = 1000; //invincible while we change
         canChange = false;
         FireArm firearm = GetComponent<FireArm>();
-        if(firearm) firearm.enabled = false;
+        if (firearm) firearm.enabled = false;
 
-        //todo:animation
-        yield return new WaitForSeconds(.5f);
+        var rotator = GetComponent<Rotator>();
+        var motor = GetComponent<PlayerMotor>();
+        rotator.enabled = false;
+        motor.enabled = false;
+
+        //animation
+        anim.SetTrigger("dead");
+
+        yield return new WaitForSeconds(3.5f);
+
         SWAT.SetActive(false);
-        zombie.SetActive( true );
+        zombie.SetActive(true);
         gameObject.tag = "Zombie";
-        yield return new WaitForSeconds(.5f);
         anim = zombie.GetComponent<Animator>();
         humanState = HumanState.ZOMBIE;
+        anim.SetTrigger("revive");
+        yield return new WaitForSeconds(3f);
+
+        rotator.enabled = true;
+        motor.enabled = true;
         health = zombieHealth;
+
     }
 
     Transform GetClosestZombie(Zombie[] zombies)

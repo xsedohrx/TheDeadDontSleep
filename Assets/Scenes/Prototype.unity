@@ -289,7 +289,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Human
       objectReference: {fileID: 0}
     - target: {fileID: 1406696007545195042, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
       propertyPath: m_Layer
