@@ -2825,18 +2825,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 538850941}
     m_Modifications:
-    - target: {fileID: 5265272865154798299, guid: 672abdacfb8f7074782d5005afdfa235, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -17.21666
-      objectReference: {fileID: 0}
-    - target: {fileID: 5269134298847973446, guid: 672abdacfb8f7074782d5005afdfa235, type: 3}
-      propertyPath: m_NavMeshLayer
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5269134305551871373, guid: 672abdacfb8f7074782d5005afdfa235, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7036121149286381819, guid: 672abdacfb8f7074782d5005afdfa235, type: 3}
       propertyPath: m_PolyMesh.m_Mesh
       value: 
