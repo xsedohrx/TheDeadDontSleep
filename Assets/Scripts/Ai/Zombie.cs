@@ -151,6 +151,8 @@ public class Zombie : NPC
         canAttack = false;
 
         currentTarget.GetComponent<NPC>().TakeDamage(damage);
+        
+        GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieBite");
         yield return new WaitForSeconds(attackCooldown);
 
         isAttacking = false;

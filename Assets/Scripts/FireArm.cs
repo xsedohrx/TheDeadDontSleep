@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FireArm : MonoBehaviour
 {
-
+    FmodPlayer audioManager;
     protected float damage;
     public float shotCooldown;
     public bool canFire = true;
@@ -16,6 +16,7 @@ public class FireArm : MonoBehaviour
     private void Awake()
     {
         bulletPool = ObjectPool.CreateInstance(projectile, 30);
+        audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>();
     }
 
     private void Start()
@@ -27,6 +28,7 @@ public class FireArm : MonoBehaviour
         if(canFire)
         {
             PoolableObject instance = bulletPool.GetObject();
+            audioManager.PlaySound("event:/TheDeadDontSleep/Sfx/Gun");
             instance.transform.SetParent(projectileSpawnPoint);
             instance.transform.localPosition = Vector3.zero;
             instance.transform.localRotation = Quaternion.identity;

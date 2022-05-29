@@ -133,6 +133,8 @@ class Player : NPC
         if(gun)
         {
             gun.Fire();
+            
+
         }
     }
 }

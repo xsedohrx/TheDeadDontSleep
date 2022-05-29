@@ -5729,7 +5729,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e215a64cd00013841aa0eba2cf14ad42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberToSpawn: 10
+  numberToSpawn: 30
   spawnDelay: 0.1
   unitPrefabs:
   - {fileID: 1853553909747289572, guid: f3d358d7f40dccc40a9565e8f613a8bd, type: 3}

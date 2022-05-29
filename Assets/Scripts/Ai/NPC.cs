@@ -144,10 +144,12 @@ public class NPC : PoolableObject
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
+                GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieChanging");
             }
             else
             {
                 Death();
+                GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieDeath");
             }
             health = 0;
         }
