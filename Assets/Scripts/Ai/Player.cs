@@ -12,6 +12,21 @@ class Player : NPC
     [SerializeField] private GameObject SWAT;
     [SerializeField] private GameObject zombie;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        anim = SWAT.GetComponent<Animator>();
+    }
+
+    protected override void OnEnable(){ 
+        PlayerInput.OnMouseButtonPressed += Attack;
+        base.OnEnable();
+    }
+    protected override void OnDisable(){ 
+        PlayerInput.OnMouseButtonPressed -= Attack;
+        base.OnDisable();
+    }
+
     protected override void CheckHealth()
     {
         if (Health <= 0)
@@ -37,16 +52,30 @@ class Player : NPC
         health = 1000; //invincible while we change
         canChange = false;
         FireArm firearm = GetComponent<FireArm>();
-        if(firearm) firearm.enabled = false;
+        if (firearm) firearm.enabled = false;
 
-        //todo:animation
-        yield return new WaitForSeconds(.5f);
+        var rotator = GetComponent<Rotator>();
+        var motor = GetComponent<PlayerMotor>();
+        rotator.enabled = false;
+        motor.enabled = false;
+
+        //animation
+        anim.SetTrigger("dead");
+
+        yield return new WaitForSeconds(3.5f);
+
         SWAT.SetActive(false);
-        zombie.SetActive( true );
-        yield return new WaitForSeconds(.5f);
+        zombie.SetActive(true);
+        gameObject.tag = "Zombie";
         anim = zombie.GetComponent<Animator>();
         humanState = HumanState.ZOMBIE;
+        anim.SetTrigger("revive");
+        yield return new WaitForSeconds(3f);
+
+        rotator.enabled = true;
+        motor.enabled = true;
         health = zombieHealth;
+
     }
 
     Transform GetClosestZombie(Zombie[] zombies)
@@ -92,8 +121,18 @@ class Player : NPC
             transform.rotation = closestZombie.transform.rotation;
 
             health = zombieHealth;
-            
-            Destroy(closestZombie.gameObject);
+
+            closestZombie.gameObject.SetActive(false);
+        }
+    }
+
+    public void Attack()
+    {
+        //do we have a gun.. 
+        FireArm gun = GetComponent<FireArm>();
+        if(gun)
+        {
+            gun.Fire();
         }
     }
 }
