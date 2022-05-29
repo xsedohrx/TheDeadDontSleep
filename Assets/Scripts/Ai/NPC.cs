@@ -78,7 +78,7 @@ public class NPC : PoolableObject
             Vector3 dir = currentTarget.position - transform.position;
             dir.y = 0;//This allows the object to only rotate on its y axis
             Quaternion rot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, 1f * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, 3f * Time.deltaTime);
             if( debug ) Debug.DrawRay(transform.position + Vector3.up * 1.5f, dir * dir.magnitude, Color.magenta);
         }
         switch (humanState)

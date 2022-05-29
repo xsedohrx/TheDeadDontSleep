@@ -36,7 +36,7 @@ public class Soldier : NPC
             {
                 case IdleState.RETREAT:
                     agent.speed = 2f; //slower running away
-                    agent.angularSpeed = 90; //dont deal with rotation while running
+                    agent.angularSpeed = 10; //dont deal with rotation while running
                     break;
                 case IdleState.PATROLLING:
                     SetTarget(null);
@@ -98,13 +98,13 @@ public class Soldier : NPC
                     }
                 }
 
-                //if (fireArm.canFire)
-                //{
-                //    StartCoroutine(fireArm.Fire());
+                if (fireArm.canFire)
+                {
+                    fireArm.Fire();
 
-                //    StartCoroutine(AttackCooldown());
+                    StartCoroutine(AttackCooldown());
 
-                //}
+                }
             }
             else
             {
