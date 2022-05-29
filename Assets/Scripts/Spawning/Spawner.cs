@@ -63,15 +63,20 @@ public class Spawner : MonoBehaviour
         PoolableObject poolableObject = unitObjectPool[spawnIndex].GetObject();
         
         NPC unit = poolableObject.GetComponent<NPC>();
-            
-        int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, -1)) {
-            NavMeshAgent agent = unit.GetComponent<NavMeshAgent>();
-            agent.Warp(hit.position);                
-            //Enable unit
-            agent.enabled = true;
-        }
+
+        do
+        {
+            int vertexIndex = UnityEngine.Random.Range(0, triangulation.vertices.Length);
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(triangulation.vertices[vertexIndex], out hit, 2f, -1))
+            {
+                NavMeshAgent agent = unit.GetComponent<NavMeshAgent>();
+                agent.Warp(hit.position);
+                //Enable unit
+                agent.enabled = true;
+            }
+            //repeat if this locations cant get to the central spawn point.. ie out of bounds
+        } while (unit.CalculatePathLength(transform.position) == float.PositiveInfinity);
 
         poolableObject.gameObject.SetActive(true);
     }

@@ -215,7 +215,7 @@ public class NPC : PoolableObject
         this.currentTarget = target;
     }
 
-    float CalculatePathLength(Vector3 targetPosition)
+    public float CalculatePathLength(Vector3 targetPosition)
     {
         // Create a path and set it based on a target position.
         NavMeshPath path = new NavMeshPath();
