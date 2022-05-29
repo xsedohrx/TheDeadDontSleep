@@ -7,7 +7,7 @@ public class ObjectPool
     private PoolableObject prefab;
     private List<PoolableObject> availableObjects;
     private static Dictionary<PoolableObject,ObjectPool> objectPools = new Dictionary<PoolableObject, ObjectPool>();
-    private GameObject poolObject;
+    public GameObject poolObject;
 
     private ObjectPool(PoolableObject prefab, int size) { 
         this.prefab = prefab;

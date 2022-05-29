@@ -2,51 +2,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class Bullet : AutoDestroyPoolableObject
 {
-    [HideInInspector]
-    public Rigidbody rigidBody;
-    public float speed = 5000f;
+    public float speed = 10f;
     public float projectileDamage = 4;
 
     private void Awake()
     {
-        rigidBody = GetComponent<Rigidbody>();
     }
 
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        rigidBody.isKinematic = false;
-        rigidBody.velocity = Vector3.zero;
-        rigidBody.angularVelocity = Vector3.zero;
-
-        rigidBody.AddForce(transform.forward * speed);
     }
 
     protected override void OnDisable() 
     {
-        rigidBody.velocity = Vector3.zero;
         base.OnDisable();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void Update()
     {
-        if (collision.gameObject.tag == "Zombie" || collision.gameObject.tag == "Human" || collision.gameObject.tag == "Soldier")
+        //cast a ray - see if it hits something, else move forward
+        RaycastHit hit;
+        // Does the ray intersect any walls
+        if (Physics.Raycast(transform.position, transform.forward, out hit, speed))
         {
-            NPC npc = collision.gameObject.GetComponent<NPC>();
-            npc?.TakeDamage(projectileDamage);
-            rigidBody.isKinematic = true;
-            gameObject.SetActive(false);
+            Debug.LogWarning("Hit");
+            Debug.LogWarning(hit);
+            Debug.LogWarning(hit.transform.gameObject.tag);
+            if (hit.transform.gameObject.tag == "Zombie" || hit.transform.gameObject.tag == "Human" || hit.transform.gameObject.tag == "Soldier")
+            {
+                NPC npc = hit.transform.gameObject.GetComponent<NPC>();
+                npc?.TakeDamage(projectileDamage);
+                gameObject.SetActive(false);
+                return;
+            }
+            else
+            {
+                //dont allow bounce off other objects
+                gameObject.SetActive(false);
+                return;
+            }
         }
-        else
-        {
-            //dont allow bounce off other objects
-            rigidBody.isKinematic = true;
-            gameObject.SetActive(false);
-        }
+
+        transform.position += transform.forward * speed;
     }
+
 
 }

@@ -174,7 +174,6 @@ public class NPC : PoolableObject
             zombie.gameObject.SetActive(true); //the zombie lives
             zombie.agent.enabled = false;
             zombie.anim.SetTrigger("revive");
-            Debug.LogError("reviving");
             zombie.StartReviveCooldown();
         }
     }

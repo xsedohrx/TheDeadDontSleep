@@ -31,7 +31,7 @@ public class FireArm : MonoBehaviour
             instance.transform.localPosition = Vector3.zero;
             instance.transform.localRotation = Quaternion.identity;
             instance.gameObject.SetActive(true);
-            instance.transform.SetParent(null);
+            instance.transform.SetParent(bulletPool.poolObject.transform);
             canFire = false;
             StartCoroutine(PauseBetweenFire());
         }

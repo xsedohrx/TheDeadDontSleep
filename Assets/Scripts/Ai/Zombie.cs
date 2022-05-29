@@ -142,7 +142,6 @@ public class Zombie : NPC
     {
         yield return new WaitForSeconds(3.5f);
         agent.enabled = true;
-        Debug.LogError("done");
     }
 
     IEnumerator AttackCooldown()
