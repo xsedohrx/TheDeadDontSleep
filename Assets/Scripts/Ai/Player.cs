@@ -52,6 +52,7 @@ class Player : NPC
         yield return new WaitForSeconds(.5f);
         SWAT.SetActive(false);
         zombie.SetActive( true );
+        gameObject.tag = "Zombie";
         yield return new WaitForSeconds(.5f);
         anim = zombie.GetComponent<Animator>();
         humanState = HumanState.ZOMBIE;
