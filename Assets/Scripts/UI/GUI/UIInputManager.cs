@@ -18,6 +18,12 @@ public class UIInputManager : MonoBehaviour
 
     private Label UISecondaryAmmoLabel;
 
+    private Label UIZombieCountLabel;
+
+    private Label UIHumanCountLabel;
+
+    private Label UIWaveLabel;
+
     private int secondaryAmmoCount;
 
     [field: SerializeField] private Sprite[] UIWeaponIconArr;
@@ -47,6 +53,12 @@ public class UIInputManager : MonoBehaviour
         UIPrimaryAmmoLabel = root.Q<Label>("weapon_primary__ammo");
         UISecondaryAmmoLabel = root.Q<Label>("weapon_secondary__ammo");
 
+            UIZombieCountLabel = root.Q<Label>("zombies");
+
+        UIHumanCountLabel = root.Q<Label>("humans");
+
+        UIWaveLabel = root.Q<Label>("wave");
+
         UIScore = root.Q<Label>("score__label");
 
         menuButton = root.Q<Button>("menu");
@@ -68,12 +80,16 @@ public class UIInputManager : MonoBehaviour
 
     void Update()
     {
-        score++;
         HealthBar.value = player.GetComponent<NPC>().Health;
         HealthBar.title = $"{HealthBar.value}%";
 
-        UIScore.text = $"Score : {player.GetComponent<NPC>().Score}";
+        UIScore.text = $"Score : {GameManager.instance.score}";
 
         UIPrimaryAmmoLabel.text = $"{ player.GetComponent<FireArm>().Ammo }";
+
+        UIZombieCountLabel.text = $"Zombies : {GameManager.instance.zombieCount}";
+        UIWaveLabel.text = $"Wave : {GameManager.instance.wave}";
+        UIHumanCountLabel.text = $"Humans : {GameManager.instance.soldierCount}";
+
     }
 }
