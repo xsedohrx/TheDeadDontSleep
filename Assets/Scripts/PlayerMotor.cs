@@ -81,7 +81,7 @@ public class PlayerMotor : MonoBehaviour
 
             if (fov)
             {
-                fov.SetOrigin(transform.position + new Vector3(0, 1, 0));
+                fov.SetOrigin(transform.position + new Vector3(0, 1.8f, 0));
             }
         }
 
