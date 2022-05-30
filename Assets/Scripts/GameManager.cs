@@ -69,6 +69,29 @@ public class GameManager : MonoBehaviour
         soldierCount++;
     }
 
+    private bool _zombieSpawnPhase = true;
+    public bool ZombieSpawnPhase
+    {
+        get
+        {
+            return _zombieSpawnPhase;
+        }
+        set
+        {
+            if (_zombieSpawnPhase && value == false)
+            {
+                _zombieSpawnPhase = false;
+
+                //going into soldier kill phase
+                score += 1000 * wave;
+                waveStartTime = Time.time;
+                wave++;
+                //next wave..
+                soldierSpawner.numberToSpawn = 200;
+
+            }
+        }
+    }
 
     public int score = 0;
     public int wave = 1;
@@ -87,13 +110,20 @@ public class GameManager : MonoBehaviour
     {
         score++;
 
-        if ( (zombiesLeft.Count < 10 && Time.time - waveStartTime > 10) )
+        if (ZombieSpawnPhase)
         {
-            score += 1000;
-            waveStartTime = Time.time;
-            wave++;
-            //next wave..
-            zombieSpawner.numberToSpawn = 40 * wave;
+            if ((zombiesLeft.Count < 10 && Time.time - waveStartTime > 10) || (Time.time - waveStartTime > 60))
+            {
+                score += 1000 * wave;
+                waveStartTime = Time.time;
+                wave++;
+                //next wave..
+                zombieSpawner.numberToSpawn = 40 * wave;
+            }
+        } 
+        else
+        {
+
         }
     }
 
