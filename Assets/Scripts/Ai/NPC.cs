@@ -11,6 +11,8 @@ public class NPC : PoolableObject
     protected Vector3 newPosition;
     public Animator anim;
     protected string[] tagToTarget = new string[] {"Zombie"};
+    public FMODUnity.StudioEventEmitter deathEmitter;
+    public FMODUnity.StudioEventEmitter changeEmitter;
 
     [SerializeField] protected bool debug = false;
     [SerializeField] protected float visionRange = 20;
@@ -144,12 +146,14 @@ public class NPC : PoolableObject
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
-                GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieChanging");
+                changeEmitter.Play();
+                //GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieChanging");
             }
             else
             {
                 Death();
-                GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieDeath");
+                deathEmitter.Play();
+                //GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieDeath");
             }
             health = 0;
         }
@@ -195,7 +199,7 @@ public class NPC : PoolableObject
 
     protected virtual void Death() {
         
-        GameObject.Destroy(gameObject);
+        GameObject.Destroy(gameObject, .3f);
     }
 
     private void StartTraining() {

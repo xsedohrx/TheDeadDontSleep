@@ -16,7 +16,7 @@ public class Zombie : NPC
     public float updateSpeed = .5f;
     [SerializeField] private bool isAttacking;
     [SerializeField] bool canAttack = true;
-    
+    public FMODUnity.StudioEventEmitter attackEmitter;
 
     public enum State { 
         WANDER,
@@ -150,8 +150,9 @@ public class Zombie : NPC
         canAttack = false;
 
         currentTarget.GetComponent<NPC>().TakeDamage(damage);
-        
-        GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieBite");
+
+        attackEmitter.Play();
+        //GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>().PlaySound("event:/TheDeadDontSleep/Zombie/ZombieBite");
         yield return new WaitForSeconds(attackCooldown);
 
         isAttacking = false;

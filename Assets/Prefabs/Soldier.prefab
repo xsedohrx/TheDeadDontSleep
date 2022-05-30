@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1520639062589381518}
   - component: {fileID: 2215899891951697139}
   - component: {fileID: 1697417036538777198}
+  - component: {fileID: 5813279655752179857}
   m_Layer: 3
   m_Name: Soldier
   m_TagString: Soldier
@@ -99,6 +100,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  deathEmitter: {fileID: 1697417036538777198}
+  changeEmitter: {fileID: 5813279655752179857}
   debug: 0
   visionRange: 20
   hearRange: 5
@@ -143,11 +146,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1254904900
+      Data2: 1162545412
+      Data3: 185297798
+      Data4: -2078779692
+    Path: event:/TheDeadDontSleep/Sfx/Death1
   Event: 
   PlayEvent: 0
   StopEvent: 0
@@ -156,8 +159,38 @@ MonoBehaviour:
   Preload: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &5813279655752179857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191746240535307810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2113974636
+      Data2: 1080646377
+      Data3: -2139650635
+      Data4: 1574443833
+    Path: event:/TheDeadDontSleep/Zombie/ZombieChanging
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 50
 --- !u!1 &3934732413462652070
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,11 +605,19 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6490606130557569133, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6586763164729490003, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6623760536627170701, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740943315555095110, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -593,6 +634,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7288494138254377490, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305665502456826290, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -629,6 +674,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8147548906858894234, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391304807951463763, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
