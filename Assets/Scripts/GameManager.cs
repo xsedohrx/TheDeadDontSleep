@@ -70,7 +70,8 @@ public class GameManager : MonoBehaviour
     }
 
 
-    int wave = 1;
+    public int score = 0;
+    public int wave = 1;
     float startTime;
     float waveStartTime;
 
@@ -84,9 +85,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        
-        if(zombiesLeft.Count < 10 && Time.time - waveStartTime > 10)
+        score++;
+
+        if ( (zombiesLeft.Count < 10 && Time.time - waveStartTime > 10) )
         {
+            score += 1000;
             waveStartTime = Time.time;
             wave++;
             //next wave..
