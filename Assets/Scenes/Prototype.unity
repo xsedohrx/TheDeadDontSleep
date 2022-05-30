@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: a6533d17b292aae44b160a114d7000cb, type: 2}
+--- !u!1 &4111334 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+  m_PrefabInstance: {fileID: 21740957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &9984008
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,11 +287,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5070773414416207938, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
---- !u!1 &21740958 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
-  m_PrefabInstance: {fileID: 21740957}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &34873890
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,6 +766,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1936282449}
+--- !u!114 &115094465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115094459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 4111334}
 --- !u!1 &123927430
 GameObject:
   m_ObjectHideFlags: 0
@@ -5569,6 +5582,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zombieSpawner: {fileID: 1871754280}
   soldierSpawner: {fileID: 169863741}
+  score: 0
+  wave: 1
+  zombieCount: 0
+  soldierCount: 0
 --- !u!4 &685111712
 Transform:
   m_ObjectHideFlags: 0
@@ -7927,7 +7944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIWeaponIconArr: []
-  player: {fileID: 2126611886}
+  player: {fileID: 4111334}
   playerHealth: 0
 --- !u!114 &1261716360
 MonoBehaviour:
@@ -11167,11 +11184,6 @@ Transform:
   m_Father: {fileID: 1625809116}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2126611886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
-  m_PrefabInstance: {fileID: 21740957}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2130328122
 GameObject:
   m_ObjectHideFlags: 0

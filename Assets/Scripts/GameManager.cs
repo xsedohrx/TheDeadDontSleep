@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         fmodPlayer = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>();
-        survivorsLeft = new List<GameObject>();
         if (instance == null)
         {
             //if not, set instance to this
@@ -109,7 +108,11 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         startTime = Time.time;
+
+        fmodPlayer.StopAllMusic();
+        FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Music/HorrorTheme", gameObject.transform.position);
     }
+
 
     private void Update()
     {
