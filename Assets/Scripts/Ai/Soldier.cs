@@ -30,12 +30,12 @@ public class Soldier : NPC
         set
         {
             _idleState = value;
-            agent.speed = 3.5f;
+            agent.speed = 4.5f;
             agent.angularSpeed = 9000;
             switch (value)
             {
                 case IdleState.RETREAT:
-                    agent.speed = 2f; //slower running away
+                    agent.speed = 3f; //slower running away
                     agent.angularSpeed = 10; //dont deal with rotation while running
                     break;
                 case IdleState.PATROLLING:

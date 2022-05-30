@@ -21,7 +21,8 @@ public class Zombie : NPC
     public enum State { 
         WANDER,
         PERSUE,
-        ATTACK
+        ATTACK,
+        DYING
     }
     public State state;
 
@@ -84,7 +85,7 @@ public class Zombie : NPC
     IEnumerator DeathBehavior()
     {
         health = 10000; // so we dont keep triggerring death
-        humanState = HumanState.ALIVE;
+        state = State.DYING;
         anim.SetTrigger("dead");
         agent.enabled = false;
         gameObject.tag = "Untagged";
@@ -164,7 +165,7 @@ public class Zombie : NPC
     IEnumerator ReviveCooldown()
     {
         yield return new WaitForSeconds(3.5f);
-        agent.enabled = true;
+        if(state != State.DYING) agent.enabled = true;
     }
 
     IEnumerator AttackCooldown()
