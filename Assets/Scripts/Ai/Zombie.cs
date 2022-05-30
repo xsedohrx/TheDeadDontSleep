@@ -40,6 +40,7 @@ public class Zombie : NPC
         damage = 2;
         health = zombieHealth;
         GetComponent<CapsuleCollider>().enabled = true;
+        anim.SetTrigger("reset");
     }
 
     protected override void OnDisable(){ base.OnDisable(); }
