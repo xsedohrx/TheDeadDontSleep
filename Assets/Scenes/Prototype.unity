@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 5053281567097054887, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+      propertyPath: health
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6000739294774477722, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -6081,7 +6085,7 @@ GameObject:
   - component: {fileID: 1261716360}
   - component: {fileID: 1261716359}
   m_Layer: 0
-  m_Name: UIDocument
+  m_Name: GUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6100,6 +6104,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIWeaponIconArr: []
+  player: {fileID: 2126611886}
+  playerHealth: 0
 --- !u!114 &1261716360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9143,6 +9149,11 @@ Transform:
   m_Father: {fileID: 1625809116}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2126611886 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+  m_PrefabInstance: {fileID: 21740957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2130328122
 GameObject:
   m_ObjectHideFlags: 0
