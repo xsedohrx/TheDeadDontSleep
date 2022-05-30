@@ -144,6 +144,9 @@ GameObject:
   - component: {fileID: 1853553909747289571}
   - component: {fileID: 1853553909747289572}
   - component: {fileID: 8443112746711735415}
+  - component: {fileID: 9172619598751748733}
+  - component: {fileID: 7802447113122883246}
+  - component: {fileID: -2956955918619428582}
   m_Layer: 3
   m_Name: Zombie
   m_TagString: Zombie
@@ -197,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  deathEmitter: {fileID: 9172619598751748733}
+  changeEmitter: {fileID: -2956955918619428582}
   debug: 0
   visionRange: 20
   hearRange: 5
@@ -210,6 +215,7 @@ MonoBehaviour:
   updateSpeed: 0.5
   isAttacking: 0
   canAttack: 1
+  attackEmitter: {fileID: 7802447113122883246}
   state: 0
 --- !u!195 &8443112746711735415
 NavMeshAgent:
@@ -233,6 +239,96 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &9172619598751748733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643836918343642846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1364621293
+      Data2: 1328426805
+      Data3: -887485296
+      Data4: 1823402591
+    Path: event:/TheDeadDontSleep/Zombie/ZombieDeath
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &7802447113122883246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643836918343642846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2136869330
+      Data2: 1198302689
+      Data3: -69631818
+      Data4: -913059287
+    Path: event:/TheDeadDontSleep/Zombie/ZombieBite
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &-2956955918619428582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4643836918343642846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 597038409
+      Data2: 1302311378
+      Data3: -644845160
+      Data4: 636245686
+    Path: event:/TheDeadDontSleep/Zombie/ZombieSound
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1001 &1171576601728987754
 PrefabInstance:
   m_ObjectHideFlags: 0

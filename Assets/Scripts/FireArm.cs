@@ -18,6 +18,7 @@ public class FireArm : MonoBehaviour
     private void Awake()
     {
         bulletPool = ObjectPool.CreateInstance(projectile, 30);
+        
     }
 
     private void Start()
@@ -30,6 +31,8 @@ public class FireArm : MonoBehaviour
         {
             ammo--;
             PoolableObject instance = bulletPool.GetObject();
+            FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Sfx/Gun", gameObject.transform.position);
+
             instance.transform.SetParent(projectileSpawnPoint);
             instance.transform.localPosition = Vector3.zero;
             instance.transform.localRotation = Quaternion.identity;

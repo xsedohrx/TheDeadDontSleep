@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4424333784316811171}
   - component: {fileID: 4424333784316811175}
   - component: {fileID: 856784208291804355}
+  - component: {fileID: 7098735755175114359}
+  - component: {fileID: -3245532342200745216}
   m_Layer: 3
   m_Name: NPC
   m_TagString: Human
@@ -74,6 +76,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+  deathEmitter: {fileID: 7098735755175114359}
+  changeEmitter: {fileID: -3245532342200745216}
   debug: 0
   visionRange: 20
   hearRange: 5
@@ -106,6 +110,66 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7098735755175114359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424333784316811170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1254904900
+      Data2: 1162545412
+      Data3: 185297798
+      Data4: -2078779692
+    Path: event:/TheDeadDontSleep/Sfx/Death1
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
+--- !u!114 &-3245532342200745216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4424333784316811170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -2113974636
+      Data2: 1080646377
+      Data3: -2139650635
+      Data4: 1574443833
+    Path: event:/TheDeadDontSleep/Zombie/ZombieChanging
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &7752449111458984478
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +561,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6490606130557569133, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6586763164729490003, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -522,6 +590,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7288494138254377490, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7305665502456826290, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
@@ -558,6 +630,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8147548906858894234, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8391304807951463763, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}

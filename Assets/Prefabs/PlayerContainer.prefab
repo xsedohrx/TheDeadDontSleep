@@ -99,6 +99,7 @@ GameObject:
   - component: {fileID: 6634202580461704663}
   - component: {fileID: 6634202580461704664}
   - component: {fileID: 8891662863454938341}
+  - component: {fileID: 5070773414416207938}
   m_Layer: 3
   m_Name: PlayerContainer
   m_TagString: Player
@@ -240,6 +241,36 @@ MonoBehaviour:
   canFire: 1
   projectile: {fileID: -488623393323196434, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
   projectileSpawnPoint: {fileID: 1068530804465390284}
+--- !u!114 &5070773414416207938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381503306902024290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -257024337
+      Data2: 1322907379
+      Data3: -3540568
+      Data4: -515785436
+    Path: event:/TheDeadDontSleep/Sfx/Gun
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &8036237829404626476
 GameObject:
   m_ObjectHideFlags: 0

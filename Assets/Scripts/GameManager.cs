@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Spawner zombieSpawner;
     [SerializeField] Spawner soldierSpawner;
 
+    FmodPlayer fmodPlayer;
     //private void OnEnable()
     //{
     //    NPC.OnDeath += RemoveFromList;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        fmodPlayer = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>();
+        survivorsLeft = new List<GameObject>();
         if (instance == null)
         {
             //if not, set instance to this
@@ -42,7 +45,9 @@ public class GameManager : MonoBehaviour
 
         soldiersLeft = new List<GameObject>();  
         zombiesLeft = new List<GameObject>();
-        player = GameObject.FindGameObjectWithTag("Player");   
+        player = GameObject.FindGameObjectWithTag("Player");
+        
+
     }
 
     public void RemoveFromZombies(GameObject objectToRemove) {

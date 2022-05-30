@@ -16,7 +16,7 @@ public class Zombie : NPC
     public float updateSpeed = .5f;
     [SerializeField] private bool isAttacking;
     [SerializeField] bool canAttack = true;
-    
+
 
     public enum State { 
         WANDER,
@@ -179,8 +179,10 @@ public class Zombie : NPC
 
         currentTarget.GetComponent<NPC>().TakeDamage(damage);
         anim.SetTrigger("attack");
-        yield return new WaitForSeconds(attackCooldown);
 
+        FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Zombie/ZombieBite", gameObject.transform.position);
+        
+        yield return new WaitForSeconds(attackCooldown);
         isAttacking = false;
         canAttack = true;
     }

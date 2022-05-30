@@ -147,10 +147,16 @@ public class NPC : PoolableObject
             if (canChange)
             {
                 humanState = HumanState.INFECTED;
+                
+                FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Zombie/ZombieChanging", gameObject.transform.position);
+                
+
             }
             else
             {
                 Death();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Zombie/ZombieDeath", gameObject.transform.position);
+
             }
         }
     }
