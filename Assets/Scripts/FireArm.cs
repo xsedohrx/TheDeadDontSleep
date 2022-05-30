@@ -7,12 +7,14 @@ public class FireArm : MonoBehaviour
 {
 
     protected float damage;
+    [field: SerializeField] private float ammo = 30f;
     public float shotCooldown;
     public bool canFire = true;
     private ObjectPool bulletPool;
     [SerializeField] Bullet projectile;
-    [SerializeField] Transform projectileSpawnPoint;    
+    [SerializeField] Transform projectileSpawnPoint;
 
+    public float Ammo { get { return ammo; } private set { } }
     private void Awake()
     {
         bulletPool = ObjectPool.CreateInstance(projectile, 30);
@@ -24,8 +26,9 @@ public class FireArm : MonoBehaviour
 
     public void Fire()
     {
-        if(canFire)
+        if(canFire && ammo > 0)
         {
+            ammo--;
             PoolableObject instance = bulletPool.GetObject();
             instance.transform.SetParent(projectileSpawnPoint);
             instance.transform.localPosition = Vector3.zero;
