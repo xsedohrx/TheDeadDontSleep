@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2949621394842092867}
   - component: {fileID: 1520639062589381518}
   - component: {fileID: 2215899891951697139}
+  - component: {fileID: 1697417036538777198}
   m_Layer: 3
   m_Name: Soldier
   m_TagString: Soldier
@@ -127,6 +128,36 @@ MonoBehaviour:
   canFire: 1
   projectile: {fileID: -488623393323196434, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
   projectileSpawnPoint: {fileID: 1527157923353568293}
+--- !u!114 &1697417036538777198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2191746240535307810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!1 &3934732413462652070
 GameObject:
   m_ObjectHideFlags: 0
