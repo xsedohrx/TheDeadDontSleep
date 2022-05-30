@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2d4eb6bd9a15c49b6b1f78bbd4c6f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammo: 30
   shotCooldown: 0.5
   canFire: 1
   projectile: {fileID: -488623393323196434, guid: 655480e8176dae147aa9ecfe3aca314d, type: 3}
@@ -548,6 +549,10 @@ PrefabInstance:
     - target: {fileID: 6623760536627170701, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6740943315555095110, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6852651115300209478, guid: ca4a8aa45c6219c4ca17280711a92324, type: 3}
       propertyPath: m_Layer
