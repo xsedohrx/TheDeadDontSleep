@@ -47,28 +47,35 @@ public class GameManager : MonoBehaviour
 
     public void RemoveFromZombies(GameObject objectToRemove) {
         zombiesLeft.Remove(objectToRemove);
-        Debug.Log("Zombies Left: " + zombiesLeft.Count);
+        //Debug.Log("Zombies Left: " + zombiesLeft.Count);
+        zombieCount--;
     }
 
     public void AddToZombies(GameObject objectToAdd) {         
         zombiesLeft.Add(objectToAdd);
-        Debug.Log("Zombies Left: " + zombiesLeft.Count);
+        //Debug.Log("Zombies Left: " + zombiesLeft.Count);
+        zombieCount++;
     }
 
     public void RemoveFromSoldiers(GameObject objectToRemove) {
         soldiersLeft.Remove(objectToRemove);
-        Debug.Log("Soldiers LEft: " + soldiersLeft.Count);
+        //Debug.Log("Soldiers LEft: " + soldiersLeft.Count);
+        soldierCount--;
     }
 
     public void AddToSoldiers(GameObject objectToAdd) {
         soldiersLeft.Add(objectToAdd);
-        Debug.Log("Soldiers LEft: "+soldiersLeft.Count);
+        //Debug.Log("Soldiers LEft: "+soldiersLeft.Count);
+        soldierCount++;
     }
 
 
     int wave = 1;
     float startTime;
     float waveStartTime;
+
+    public int zombieCount = 0;
+    public int soldierCount = 0;
 
     private void Start()
     {
