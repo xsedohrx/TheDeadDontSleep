@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Spawner : MonoBehaviour
 {
 
-    [SerializeField] private int numberToSpawn = 10;
+    [SerializeField] public int numberToSpawn = 10;
     [SerializeField] private float spawnDelay = 1f;
     [SerializeField] private List<NPC> unitPrefabs = new List<NPC> ();
     public SpawnMethod spawnMethod = SpawnMethod.ROUNDROBIN;
@@ -33,16 +33,21 @@ public class Spawner : MonoBehaviour
         
         int spawnedUnits = 0;
         
-        while (spawnedUnits < numberToSpawn)
+        while ( true )
         {
-            if (spawnMethod == SpawnMethod.ROUNDROBIN)
+            if (numberToSpawn > 0)
             {
-                SpawnRoundRobinUnit(spawnedUnits);
+                if (spawnMethod == SpawnMethod.ROUNDROBIN)
+                {
+                    SpawnRoundRobinUnit(spawnedUnits);
+                }
+                else if (spawnMethod == SpawnMethod.RANDOM)
+                {
+                    SpawnRandomUnit();
+                }
+                spawnedUnits++;
+                numberToSpawn--;
             }
-            else if (spawnMethod == SpawnMethod.RANDOM) {
-                SpawnRandomUnit();
-            }
-            spawnedUnits++;
             
             yield return wait;
         }

@@ -56,9 +56,13 @@ public class Soldier : NPC
         agent.stoppingDistance = 1.0f;
         damage = 2f;
         StartCoroutine(StartBehavior());
+        GameManager.instance.AddToSoldiers(gameObject);
     }
 
-    protected override void OnDisable(){ base.OnDisable();}
+    protected override void OnDisable(){
+        GameManager.instance.RemoveFromSoldiers(gameObject);
+        base.OnDisable();
+    }
     protected override void Awake(){ 
         base.Awake();
         fireArm = GetComponent<FireArm>();

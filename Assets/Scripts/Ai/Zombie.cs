@@ -42,9 +42,13 @@ public class Zombie : NPC
         health = zombieHealth;
         GetComponent<CapsuleCollider>().enabled = true;
         anim.SetTrigger("reset");
+        GameManager.instance.AddToZombies(gameObject);
     }
 
-    protected override void OnDisable(){ base.OnDisable(); }
+    protected override void OnDisable(){
+        GameManager.instance.RemoveFromZombies(gameObject);
+        base.OnDisable(); 
+    }
     protected override void Start(){ base.Start(); }
 
     protected override void Awake()
@@ -67,7 +71,7 @@ public class Zombie : NPC
             }
             */
 
-            if (canAttack)
+            if (canAttack && state != State.DYING)
             {
                 StartCoroutine(AttackCooldown());
 
