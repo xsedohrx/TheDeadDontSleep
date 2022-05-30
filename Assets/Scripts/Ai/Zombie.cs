@@ -38,6 +38,7 @@ public class Zombie : NPC
         agent.stoppingDistance = 1f;
         tagToTarget = new string[] { "Human", "Soldier", "Player" };
         damage = 2;
+        health = zombieHealth;
     }
 
     protected override void OnDisable(){ base.OnDisable(); }

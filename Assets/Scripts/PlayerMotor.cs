@@ -56,8 +56,8 @@ public class PlayerMotor : MonoBehaviour
             //Debug.LogWarning(targetMovement);
             //Debug.LogError(targetMovementAnimDirection);
 
-            currentMovement = Vector3.Lerp(currentMovement, targetMovement, 0.05f);
-            currentMovementAnimDirection = Vector2.Lerp(currentMovementAnimDirection, targetMovementAnimDirection, 0.05f);
+            currentMovement = Vector3.Lerp(currentMovement, targetMovement, 0.25f);
+            currentMovementAnimDirection = Vector2.Lerp(currentMovementAnimDirection, targetMovementAnimDirection, 0.15f);
 
             //when numbers get small - zero them so not moving very very slightly
             if (currentMovement.magnitude < 0.0005)

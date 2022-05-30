@@ -99,6 +99,7 @@ public class Soldier : NPC
 
                 if (fireArm.canFire)
                 {
+                    anim.SetTrigger("attack");
                     fireArm.Fire();
 
                     StartCoroutine(AttackCooldown());

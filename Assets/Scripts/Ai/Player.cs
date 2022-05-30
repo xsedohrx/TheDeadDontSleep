@@ -130,8 +130,9 @@ class Player : NPC
     {
         //do we have a gun.. 
         FireArm gun = GetComponent<FireArm>();
-        if(gun)
+        if(gun && gun.canFire)
         {
+            anim.SetTrigger("attack");
             gun.Fire();
         }
     }

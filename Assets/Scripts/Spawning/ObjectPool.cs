@@ -52,7 +52,7 @@ public class ObjectPool
     public PoolableObject GetObject() {
         if (availableObjects.Count <= 5)
         {
-            Debug.LogError("Make more ..");
+            //Debug.Log("Make more ..");
             //opps we ran out.. make more!
             CreateObjects(10);
         }
