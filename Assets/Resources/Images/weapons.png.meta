@@ -679,7 +679,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       OT Handgun 1: 21300028
-      OT Handgun 4: 21300010
+      OT Shotgun 2: 21300012
       OT Handgun 3: 21300014
       OT Submachinegun 1: 21300024
       OT Rocketlauncher 1: 21300032
@@ -700,8 +700,8 @@ TextureImporter:
       OT Semiautomatic rifle 1: 21300008
       OT Automatic rifle 3: 21300044
       OT Handgun 5: 21300004
-      OT Shotgun 2: 21300012
       OT Handgun 2: 21300022
+      OT Handgun 4: 21300010
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

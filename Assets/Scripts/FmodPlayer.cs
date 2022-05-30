@@ -18,7 +18,7 @@ public class FmodPlayer : MonoBehaviour
     {
         StopAllMusic();
 
-            PlaySound("event:/TheDeadDontSleep/Music/MusicBox/MainMenuTheme");
+        PlaySound("event:/TheDeadDontSleep/Music/MusicBox/MainMenuTheme");
     }
 
     public void PlaySound(string path)

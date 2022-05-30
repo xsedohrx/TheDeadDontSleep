@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 5070773414416207938, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6000739294774477722, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -275,8 +279,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5070773414416207938, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+--- !u!1 &21740958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1381503306902024290, guid: 6b12823fb11055d4e8174aa727aa6bd0, type: 3}
+  m_PrefabInstance: {fileID: 21740957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &34873890
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +521,7 @@ GameObject:
   - component: {fileID: 115094461}
   - component: {fileID: 115094460}
   - component: {fileID: 115094464}
+  - component: {fileID: 115094465}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -630,6 +641,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1936282449}
+--- !u!114 &115094465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115094459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attenuationObject: {fileID: 21740958}
 --- !u!1 &152675375
 GameObject:
   m_ObjectHideFlags: 0

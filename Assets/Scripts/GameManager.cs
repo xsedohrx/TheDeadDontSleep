@@ -5,11 +5,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     GameObject player;
-    FmodPlayer fmodPlayer;
     List<GameObject> survivorsLeft;
     List<GameObject> soldiersLeft;
     List<GameObject> zombiesLeft;
-
+    FmodPlayer fmodPlayer;
     //private void OnEnable()
     //{
     //    NPC.OnDeath += RemoveFromList;
@@ -22,18 +21,19 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        fmodPlayer = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>();
         survivorsLeft = new List<GameObject>();
         soldiersLeft = new List<GameObject>();  
         zombiesLeft = new List<GameObject>();
         player = GameObject.FindGameObjectWithTag("Player");
-        fmodPlayer = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<FmodPlayer>();
+        
 
     }
 
     private void Start()
     {
         fmodPlayer.StopAllMusic();
-        fmodPlayer.PlaySound("event:/TheDeadDontSleep/Music/HorrorTheme");
+        FMODUnity.RuntimeManager.PlayOneShot("event:/TheDeadDontSleep/Music/HorrorTheme", gameObject.transform.position);
     }
 
     void RemoveFromList(List<GameObject> listToRemoveFrom, GameObject objectToRemove) {
