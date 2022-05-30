@@ -78,6 +78,8 @@ class Player : NPC
         motor.enabled = true;
         health = zombieHealth;
 
+        //change to final phase and spawn some zombies..
+        GameManager.instance.ZombieSpawnPhase = false;
     }
 
     Transform GetClosestZombie(Zombie[] zombies)
@@ -87,7 +89,7 @@ class Player : NPC
         Vector3 currentPosition = transform.position;
         for (int i = 0; i < zombies.Length; i++)
         {
-            if (!zombies[i].gameObject.activeInHierarchy) continue;
+            if (!zombies[i].gameObject.activeSelf) continue;
 
             Vector3 directionToTarget = zombies[i].transform.position - currentPosition;
             float dSqrToTarget = directionToTarget.sqrMagnitude;
@@ -106,15 +108,15 @@ class Player : NPC
     {
         health = 1000; //invincible while we change
         //animation here - TODO ? maybe not needed
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.1f);
         Zombie[] zombies = FindObjectsOfType<Zombie>();
 
         Transform closestZombie = GetClosestZombie(zombies);
 
         if (closestZombie == null)
         {
-            health = 0;
             //GAME OVER ? TODO
+            GameObject.Destroy(gameObject, 0.1f);
         }
         else
         {

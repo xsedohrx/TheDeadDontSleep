@@ -168,7 +168,7 @@ public class Zombie : NPC
 
     IEnumerator ReviveCooldown()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(1.5f);
         if(state != State.DYING) agent.enabled = true;
     }
 
