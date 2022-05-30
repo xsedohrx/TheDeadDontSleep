@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Scripts/UI/GUI/ui.uss?fileID=7433441132597879392&amp;guid=fe47cd14315dfc8459b3849248bf1c64&amp;type=3#ui" />
+    <ui:VisualElement name="UiContainer" style="width: 100%; height: 100%; justify-content: center; align-items: flex-end; flex-direction: row; background-image: resource(&apos;Images/zombie-hand-halloween-theme-concept&apos;);">
+        <ui:VisualElement name="column_left" style="width: 25%; height: 100%; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0);" />
+        <ui:VisualElement name="column_mid" style="width: 50%; height: 100%; background-color: rgba(238, 176, 176, 0); justify-content: center; align-items: center; -unity-font-definition: none;">
+            <ui:Label text="THE DEAD DON&apos;T SLEEP" display-tooltip-when-elided="true" style="width: 100%; height: 10%; color: rgba(0, 231, 255, 255); -unity-text-align: upper-center; -unity-font: resource(&apos;Fonts/Orbitron-VariableFont_wght&apos;); -unity-font-style: bold-and-italic; font-size: 20px;" />
+            <ui:Button text="PLAY" display-tooltip-when-elided="true" name="play" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; -unity-font-definition: none; -unity-font: resource(&apos;Fonts/Orbitron-VariableFont_wght&apos;); width: 80%; height: 5%; margin-left: 2%; margin-right: 0; margin-top: 0; margin-bottom: 5%; background-color: rgb(0, 0, 0); font-size: 12px; color: rgb(83, 238, 238);" />
+            <ui:Button text="EXIT" display-tooltip-when-elided="true" name="exit" style="border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; -unity-font-definition: none; -unity-font: resource(&apos;Fonts/Orbitron-VariableFont_wght&apos;); width: 80%; height: 5%; margin-left: 2%; margin-right: 0; margin-top: 5%; margin-bottom: 0; background-color: rgb(0, 0, 0); font-size: 12px; color: rgb(83, 238, 238);" />
+        </ui:VisualElement>
+        <ui:VisualElement name="column_right" style="width: 25%; height: 100%; background-color: rgba(191, 192, 162, 0); align-items: flex-end; justify-content: flex-end;" />
+    </ui:VisualElement>
+</ui:UXML>

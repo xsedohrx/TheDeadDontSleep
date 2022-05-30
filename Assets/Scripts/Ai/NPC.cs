@@ -28,6 +28,7 @@ public class NPC : PoolableObject
     protected bool canChange = true;
     private bool inTraining = false;
     private bool isTarget = false;
+    private float score = 0f;
 
     [SerializeField]
     protected Zombie zombiePrefab;
@@ -41,6 +42,7 @@ public class NPC : PoolableObject
 
 
     public float Health { get { return health; } private set { } }
+    public float Score { get { return score; } private set { } }
     protected float GetTargetDistance(Transform target) { return Vector3.Distance(target.position, transform.position); }
 
     protected void UpdateAnimator()
@@ -202,7 +204,7 @@ public class NPC : PoolableObject
 
     public void TakeDamage(float damageToTake) {
         health -= damageToTake;
-
+        score += damageToTake * 10;
     }
 
     void SetKiller(GameObject killer) {
