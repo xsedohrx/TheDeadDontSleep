@@ -9,8 +9,8 @@ public class Zombie : NPC
 {
 
 
-    private float wanderSpeed = 3.5f;
-    private float chaseSpeed = 6f;
+    private float wanderSpeed = 1f;
+    private float chaseSpeed = 7f;
     private float attackCooldown = 1.0f;
     private float sightRadius = 8.0f;
     public float updateSpeed = .5f;
@@ -39,6 +39,7 @@ public class Zombie : NPC
         tagToTarget = new string[] { "Human", "Soldier", "Player" };
         damage = 2;
         health = zombieHealth;
+        GetComponent<CapsuleCollider>().enabled = true;
     }
 
     protected override void OnDisable(){ base.OnDisable(); }
@@ -54,13 +55,15 @@ public class Zombie : NPC
         base.Update();
 
         //check if we can fire here otherwise we will only ever fire every 2 seconds!
-        if (currentTarget && GetTargetDistance(currentTarget) <= 1.15)
+        if (currentTarget && GetTargetDistance(currentTarget) <= 1.25)
         {
+            /*
             if (agent.enabled && agent.velocity.magnitude > 0)
             {
                 //stop the agent! we are close enough
                 agent.SetDestination(transform.position);
             }
+            */
 
             if (canAttack)
             {
@@ -84,17 +87,17 @@ public class Zombie : NPC
         anim.SetTrigger("dead");
         agent.enabled = false;
         gameObject.tag = "Untagged";
+        GetComponent<CapsuleCollider>().enabled = false;
         yield return new WaitForSeconds(10);
         gameObject.SetActive(false);
     }
 
     IEnumerator StartBehavior()
     {
-        WaitForSeconds wait = new WaitForSeconds(updateSpeed);
         while (enabled)
         {
             StateSwitch();            
-            yield return wait;
+            yield return new WaitForSeconds(updateSpeed);
             //Debug.Log("Testing");
         }
     }
@@ -104,14 +107,17 @@ public class Zombie : NPC
         switch (state)
         {
             case State.WANDER:
+                updateSpeed = 1.5f;
                 Wander();
                 break;
 
             case State.PERSUE:
+                updateSpeed = 0.2f;
                 Persue();
                 break;
 
             case State.ATTACK:
+                updateSpeed = 0.2f;
                 CheckAttack();
                 break;
         }

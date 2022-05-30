@@ -215,13 +215,24 @@ public class NPC : PoolableObject
 
     protected virtual void MoveToDestination()
     {
-        newPosition = new Vector3(
-            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange),
-            transform.position.y,
-            UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange)
-            );
-        if (agent.enabled)
-            agent.SetDestination(newPosition);
+        if (!agent.enabled) return;
+
+        for (var tryCount = 0; tryCount < 5; tryCount++)
+        {
+            newPosition = new Vector3(
+                UnityEngine.Random.Range(transform.position.x - wanderRange, transform.position.x + wanderRange),
+                transform.position.y,
+                UnityEngine.Random.Range(transform.position.z - wanderRange, transform.position.z + wanderRange)
+                );
+            float distance = CalculatePathLength(newPosition);
+
+            //if we cant reach it and its not VERY far then set destination
+            if (distance != float.PositiveInfinity && distance < visionRange * 2)
+            {
+                agent.SetDestination(newPosition);
+                return;//found a reasonable random location to wander to
+            }
+        }
     }
 
     

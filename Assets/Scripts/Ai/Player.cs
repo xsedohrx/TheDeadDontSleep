@@ -12,6 +12,8 @@ class Player : NPC
     [SerializeField] private GameObject SWAT;
     [SerializeField] private GameObject zombie;
 
+    private bool canZombieAttack = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -128,12 +130,44 @@ class Player : NPC
 
     public void Attack()
     {
-        //do we have a gun.. 
-        FireArm gun = GetComponent<FireArm>();
-        if(gun && gun.canFire)
+        if (humanState == HumanState.ALIVE)
         {
+            //do we have a gun.. 
+            FireArm gun = GetComponent<FireArm>();
+            if (gun && gun.enabled && gun.canFire)
+            {
+                anim.SetTrigger("attack");
+                gun.Fire();
+            }
+        }
+        else if(canZombieAttack)
+        {
+            //attacking as a zombie..
             anim.SetTrigger("attack");
-            gun.Fire();
+            //anything in front of us ?
+            RaycastHit hit;
+            // Does the ray intersect any walls
+            if (Physics.Raycast(transform.position + Vector3.up * 1.5f, transform.forward, out hit, 1.4f))
+            {
+                //hit something..
+                if (hit.transform.gameObject.tag == "Zombie" || hit.transform.gameObject.tag == "Human" || hit.transform.gameObject.tag == "Soldier")
+                {
+                    NPC npc = hit.transform.gameObject.GetComponent<NPC>();
+                    npc?.TakeDamage(10); //player does more damage on hit
+                }
+
+            }
+            StartCoroutine(AttackCooldown());
         }
     }
+
+    IEnumerator AttackCooldown()
+    {
+        canZombieAttack = false;
+
+        yield return new WaitForSeconds(1f);
+
+        canZombieAttack = true;
+    }
+
 }
